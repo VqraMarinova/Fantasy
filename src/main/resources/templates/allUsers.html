@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/header}"/>
+<main>
+
+    <div class="container"><br>
+    <h1 class="text-white">Admin</h1>
+
+
+        <div sec:authorize="hasAuthority('ADMIN')" class="text-white">
+            <table class="table table-hover table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Promote/Demote</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${regularUsers}">
+                    <td th:text="${user.getUsername()}"></td>
+                    <td th:text="${user.getEmail()}"></td>
+                    <td th:text="${user.getRole()}"></td>
+                    <td>
+                        <a th:href="@{'/promote/MODERATOR/' + ${user.getUsername()}}" type="button" class="btn btn-outline-light btn-sm" >Promote</a>
+                    </td>
+                </tr>
+                <tr th:each="user : ${moderators}">
+                        <td th:text="${user.getUsername()}"></td>
+                        <td th:text="${user.getEmail()}"></td>
+                        <td th:text="${user.getRole()}"></td>
+                        <td>
+                            <a th:href="@{'/promote/ADMIN/' + ${user.getUsername()}}" type="button" class="btn btn-outline-light btn-sm" >Promote</a>
+                            <a th:href="@{'/demote/MODERATOR/' + ${user.getUsername()}}" type="button" class="btn btn-outline-light btn-sm" >Demote</a>
+                        </td>
+                </tr>
+                <div sec:authorize="hasAuthority('ROOT')" class="text-white">
+                    <tr th:each="user : ${admins}">
+                        <td th:text="${user.getUsername()}"></td>
+                        <td th:text="${user.getEmail()}"></td>
+                        <td th:text="${user.getRole()}"></td>
+                        <td>
+                            <a th:href="@{'/demote/ADMIN/' + ${user.getUsername()}}" type="button" class="btn btn-outline-light btn-sm" >Demote</a>
+                        </td>
+                    </tr>
+                </div>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

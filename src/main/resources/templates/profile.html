@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+       >
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/header}"/>
+<main>
+
+    <div class="container">
+        <div class="text-center">
+            <h3 class="text-white">User Profile:</h3>
+            <br>
+            <h4 class="text-white">Username: <span th:text="${session.username}"></span></h4>
+            <h4 class="text-white">Email: <span th:text="${session.email}"></span></h4>
+            <br>
+
+            <button data-toggle="collapse" data-target="#changePassword" class="btn btn-light mr-3">Change password</button>
+            <button data-toggle="collapse" data-target="#changeEmail" class="btn btn-light mr-4">&nbsp&nbsp&nbspChange email&nbsp&nbsp&nbsp</button>
+            <br> <br>
+
+            <div id="changePassword" class="collapse">
+                <form class="mx-auto w-25" action="/changePassword" method="post">
+                        <div class="form-group">
+                            <div class="label-holder text-white d-flex justify-content-center">
+                                <label for="currentPassword" class="h3 mb-2">Current Password</label>
+                            </div>
+                            <input type="password" class="form-control" id="currentPassword" name="currentPassword"/>
+                        </div>
+                        <div class="form-group">
+                            <div class="label-holder text-white d-flex justify-content-center">
+                                <label for="newPassword" class="h3 mb-2">New password</label>
+                            </div>
+                            <input type="password" class="form-control" id="newPassword" name="newPassword"/>
+                        </div>
+                        <div class="form-group">
+                            <div class="label-holder text-white textCol d-flex justify-content-center">
+                                <label for="confirmPassword" class="h4 mb-2">Confirm Password</label>
+                            </div>
+                            <input class="form-control" type="password" id="confirmPassword" name="confirmPassword"/>
+                        </div>
+                        <div class="button-holder d-flex justify-content-center">
+                            <button class="btn btn-secondary btn-sm text-white mb-3" type="submit">Confirm</button>
+                        </div>
+
+                </form>
+            </div>
+
+
+            <div id="changeEmail" class="collapse" >
+                <form class="mx-auto w-25" action="/changeEmail" method="post">
+                        <div class="form-group">
+                            <div class="label-holder text-white d-flex justify-content-center">
+                                <label for="password" class="h3 mb-2">Your Password</label>
+                            </div>
+                            <input type="password" class="form-control" id="password" name="password"/>
+                        </div>
+                        <div class="form-group">
+                            <div class="label-holder text-white d-flex justify-content-center">
+                                <label for="newEmail" class="h3 mb-2">New Email</label>
+                            </div>
+                            <input type="email" class="form-control" id="newEmail" name="newEmail"/>
+                        </div>
+                        <div class="form-group">
+                            <div class="label-holder text-white textCol d-flex justify-content-center">
+                                <label for="confirmEmail" class="h4 mb-2">Confirm Email</label>
+                            </div>
+                            <input class="form-control" type="email" id="confirmEmail" name="confirmEmail"/>
+                        </div>
+                        <div class="button-holder d-flex justify-content-center">
+                            <button class="btn btn-secondary btn-sm text-white mb-3"  type="submit">Confirm</button>
+                        </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</main>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

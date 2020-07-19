@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/header}"/>
+<main>
+    <div>
+        <div class="container">
+    <h1 class="text-center text-white">Add new movie</h1>
+    <hr class="hr-3"/>
+    <form class="mx-auto w-50" action="/add-movie" method="post">
+        <div class="form-group">
+            <div class="label-holder textCol d-flex justify-content-center">
+                <label for="title" class="h4 mb-2 text-white">Title</label>
+            </div>
+            <input type="text" class="form-control" id="title" name="title"/>
+        </div>
+        <div class="form-group">
+            <div class="label-holder textCol d-flex justify-content-center">
+                <label for="trailerLink" class="h4 mb-2 text-white">Video Trailer Link</label>
+            </div>
+            <input type="text" class="form-control" id="trailerLink" name="trailerLink"/>
+        </div>
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="description" class="h4 mb-2">Description</label>
+            </div>
+            <textarea type="text" class="form-control" rows="3" id="description" name="description"></textarea>
+        </div>
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="director" class="h4 mb-2">Director</label>
+            </div>
+            <input type="text" class="form-control" id="director" name="director"/>
+        </div>
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="cast" class="h4 mb-2">Cast</label>
+            </div>
+            <input type="text" class="form-control" id="cast" name="cast"/>
+        </div>
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="releaseDate"  class="h4 mb-2">Release Date</label>
+            </div>
+            <input type="date" class="form-control" id="releaseDate" name="releaseDate"/>
+        </div>
+        <div class="button-holder d-flex justify-content-center">
+            <button class="btn btn-info text-white mb-3" type="submit">Register</button>
+        </div>
+    </form>
+    </div>
+    </div>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

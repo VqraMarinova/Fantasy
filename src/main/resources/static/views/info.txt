@@ -1,0 +1,13 @@
+Users – username, full name, email, password
+Movies- title, image,year, rating, descr, book
+Books- title, image, author, rating, descr, serie
+Series- title, authors, rating, descr, books
+Authors- full name, shortbio, books, series
+
+Comment- users, books, series, movies
+
+org.hibernate.dialect.MySQL8Dialect
+
+org.hibernate.dialect.MariaDBDialect
+
+&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
