@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<th:block th:include="~{fragments/head}"/>
+<link rel="stylesheet" href="/css/explore.css">
+<link rel="stylesheet" href="/css/loader.css">
+<body>
+<th:block th:include="~{fragments/header}"/>
+<main>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div id="admin-sidebar" class="col-md-2 p-x-0 p-y-3">
+                <ul class="sidenav admin-sidenav list-unstyled">
+                    <li><a href="/explore/books" >Books</a></li>
+                    <li><a href="/explore/movies" >Movies</a></li>
+                    <li><a href="/explore/stories" >Short stories</a></li>
+                    <li><a href="/explore/questions" >Community Questions</a></li>
+                    <li><a href="/explore/quotes" >Community Favorite Quotes</a></li>
+                </ul>
+            </div> <!-- /#admin-sidebar -->
+            <div id="admin-main-control" class="col-md-10 p-x-3 p-y-1">
+                <div id="exploreItems"></div>
+            </div> <!-- /#admin-main-control -->
+        </div> <!-- /.row -->
+    </div>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+<script type="module" th:src="@{/js/exploreElementApp.js}"></script>
+
+
+</body>
+</html>

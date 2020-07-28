@@ -21,10 +21,10 @@ public class ShortStory extends BaseEntity {
     @Column
     private String title;
 
-    @Column
+    @Column(columnDefinition = "NVARCHAR(600)")
     private String summary;
 
-    @Column
+    @Column(columnDefinition = "NVARCHAR(7000)")
     private String content;
 
     @Column(name = "release_date")
@@ -34,10 +34,10 @@ public class ShortStory extends BaseEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "story")
+    @OneToMany(mappedBy = "story", cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "story")
+    @OneToMany(mappedBy = "story", cascade = CascadeType.REMOVE)
     private List<Rating> rating;
 
 }

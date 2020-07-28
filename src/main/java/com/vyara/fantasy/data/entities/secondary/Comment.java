@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -15,8 +16,11 @@ import javax.persistence.*;
 @Table(name = "comments")
 public class Comment extends BaseEntity {
 
-    @Column
+    @Column(columnDefinition = "NVARCHAR(600)")
     private String content;
+
+    @Column(name = "publish_date")
+    private LocalDate publishDate;
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="user_id", nullable=false)

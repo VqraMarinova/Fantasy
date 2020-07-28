@@ -30,10 +30,11 @@ public class LoggedInUserFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-        String email = authenticatedUserService.getCurrentUser().getEmail();
+
 
         HttpSession session = ((HttpServletRequest)servletRequest).getSession();
         session.setAttribute("username", username);
+        String email = authenticatedUserService.getCurrentUser().getEmail();
         session.setAttribute("email", email);
         filterChain.doFilter(servletRequest, servletResponse);
     }

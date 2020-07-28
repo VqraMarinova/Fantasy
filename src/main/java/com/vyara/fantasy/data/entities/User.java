@@ -31,13 +31,13 @@ public class User extends BaseEntity implements UserDetails {
     @Column
     private String password;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<Question> questions;
 
-    @OneToMany(mappedBy = "user", targetEntity = ShortStory.class,cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", targetEntity = ShortStory.class,cascade=CascadeType.REMOVE)
     private List<ShortStory> shortStories;
 
     //SpringSecurity:

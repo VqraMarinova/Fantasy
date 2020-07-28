@@ -11,7 +11,7 @@
     <groupId>com.vyara</groupId>
     <artifactId>fantasy</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>heroes</name>
+    <name>fantasy</name>
     <description>Fantasy project for Spring Boot</description>
 
     <properties>

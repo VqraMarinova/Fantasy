@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class Movie extends BaseEntity {
     @Column(name = "trailer_link")
     private String trailerLink;
 
-    @Column
+    @Column(columnDefinition = "NVARCHAR(600)")
     private String description;
 
     @Column
@@ -40,9 +37,9 @@ public class Movie extends BaseEntity {
     private LocalDate releaseDate;
 
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.REMOVE)
     private List<Rating> rating;
 }

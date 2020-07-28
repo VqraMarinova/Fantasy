@@ -1,7 +1,6 @@
 package com.vyara.fantasy.data.entities;
 
 import com.vyara.fantasy.data.entities.base.BaseEntity;
-import com.vyara.fantasy.data.entities.secondary.Author;
 import com.vyara.fantasy.data.entities.secondary.Comment;
 import com.vyara.fantasy.data.entities.secondary.Rating;
 import lombok.Getter;
@@ -25,19 +24,18 @@ public class Book extends BaseEntity {
     @Column
     private String image;
 
-    @Column
+    @Column(columnDefinition = "NVARCHAR(600)")
     private String description;
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
-    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "author_id", referencedColumnName = "id")
-    private Author author;
+    @Column
+    private String author;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book",cascade = CascadeType.REMOVE)
     private List<Rating> rating;
 }

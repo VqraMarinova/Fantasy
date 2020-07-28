@@ -22,10 +22,10 @@ body:after {
 
 .bg-text {
      background-color: rgb(0,0,0); /* Fallback color */
-     background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+     background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
      color: white;
-     font-weight: bold;
-     border: 3px solid #f1f1f1;
+     font-weight: normal;
+     border: 2px solid #f1f1f1;
      z-index: 2;
      width: 80%;
      padding: 20px;
@@ -45,3 +45,18 @@ footer {
 /* Dropdown menu font color*/
 
 .navbar li .dropdown-menu  a{   color: white;  }
+#myCarousel{
+
+     height:100%;
+     margin-bottom: -50px;
+     margin-top: -80px;
+
+}
+.carousel-caption{
+     margin-bottom: 20%;
+
+}
+#table{
+     margin: auto;
+
+}

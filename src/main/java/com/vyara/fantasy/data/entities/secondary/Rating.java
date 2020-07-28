@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class Rating extends BaseEntity {
 
     @Column
-    private byte rating;
+    private Integer rating;
 
     @ManyToOne
     private Book book;

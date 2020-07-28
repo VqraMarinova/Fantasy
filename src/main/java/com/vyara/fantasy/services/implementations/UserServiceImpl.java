@@ -1,6 +1,7 @@
 package com.vyara.fantasy.services.implementations;
 
 import com.vyara.fantasy.data.entities.User;
+import com.vyara.fantasy.data.models.ViewModels.CheckUserResponseModel;
 import com.vyara.fantasy.data.models.service.ChangeEmailServiceModel;
 import com.vyara.fantasy.data.models.service.ChangePasswordServiceModel;
 import com.vyara.fantasy.data.models.service.UserRegisterServiceModel;
@@ -9,13 +10,16 @@ import com.vyara.fantasy.services.AuthenticatedUserService;
 import com.vyara.fantasy.services.HashingService;
 import com.vyara.fantasy.services.RoleService;
 import com.vyara.fantasy.services.UserService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,9 +39,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(UserRegisterServiceModel userRegisterServiceModel) {
-        User user = modelMapper.map(userRegisterServiceModel, User.class);
-        user.setPassword(hashingService.hash(userRegisterServiceModel.getPassword()));
+    public void register(UserRegisterServiceModel model) throws Exception {
+        if (!model.getPassword().equals(model.getConfirmPassword())) {
+            throw new Exception("Password do not match");
+        }
+        User user = modelMapper.map(model, User.class);
+        user.setPassword(hashingService.hash(model.getPassword()));
         setRoles(user);
         userRepository.save(user);
     }
@@ -49,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void setRoles(User user) {
-        if (this.userRepository.count()== 0){
+        if (this.userRepository.count() == 0) {
             this.roleService.seedRolesInDb();
             user.setAuthorities(this.roleService.getAllRoles());
         } else {
@@ -62,7 +69,7 @@ public class UserServiceImpl implements UserService {
     public void changePassword(ChangePasswordServiceModel changePasswordServiceModel) throws Exception {
         User user = this.authenticatedUserService.getCurrentUser();
         if (!changePasswordServiceModel.getNewPassword().equals(changePasswordServiceModel.getConfirmPassword())
-    || hashingService.hash(changePasswordServiceModel.getCurrentPassword()).equals(user.getPassword()) ){
+                || hashingService.hash(changePasswordServiceModel.getCurrentPassword()).equals(user.getPassword())) {
             throw new Exception("Password does not match");
         }
 
@@ -76,7 +83,7 @@ public class UserServiceImpl implements UserService {
     public void changeEmail(ChangeEmailServiceModel changeEmailServiceModel) throws Exception {
         User user = this.authenticatedUserService.getCurrentUser();
         if (!changeEmailServiceModel.getNewEmail().equals(changeEmailServiceModel.getConfirmEmail())
-                || hashingService.hash(changeEmailServiceModel.getPassword()).equals(user.getPassword()) ){
+                || hashingService.hash(changeEmailServiceModel.getPassword()).equals(user.getPassword())) {
             throw new Exception("Password does not match");
         }
 
@@ -84,5 +91,21 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(user);
 
     }
-}
 
+    @Override
+    public List<CheckUserResponseModel> getCheckUsers(){
+        List<CheckUserResponseModel> models = new ArrayList<>();
+        this.userRepository.findAll().forEach(u->{
+            CheckUserResponseModel model = new CheckUserResponseModel();
+            model.setUsername(DigestUtils.sha256Hex(u.getUsername()));
+            model.setEmail(DigestUtils.sha256Hex(u.getEmail()));
+            models.add(model);
+
+        });
+
+
+        return models;
+    };
+
+
+}

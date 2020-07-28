@@ -15,7 +15,7 @@
 
 
         <div sec:authorize="hasAuthority('ADMIN')" class="text-white">
-            <table class="table table-hover table-dark">
+            <table class="table table-hover table-dark table-striped table-bordered">
                 <thead>
                 <tr>
                     <th scope="col">Username</th>
@@ -31,7 +31,7 @@
                     <td th:text="${user.getEmail()}"></td>
                     <td th:text="${user.getRole()}"></td>
                     <td>
-                        <a th:href="@{'/promote/MODERATOR/' + ${user.getUsername()}}" type="button" class="btn btn-outline-light btn-sm" >Promote</a>
+                        <a th:href="@{'/promote/0/' + ${user.getUsername()}}" type="button" class="btn btn-outline-light btn-sm" >Promote</a>
                     </td>
                 </tr>
                 <tr th:each="user : ${moderators}">
@@ -39,8 +39,8 @@
                         <td th:text="${user.getEmail()}"></td>
                         <td th:text="${user.getRole()}"></td>
                         <td>
-                            <a th:href="@{'/promote/ADMIN/' + ${user.getUsername()}}" type="button" class="btn btn-outline-light btn-sm" >Promote</a>
-                            <a th:href="@{'/demote/MODERATOR/' + ${user.getUsername()}}" type="button" class="btn btn-outline-light btn-sm" >Demote</a>
+                            <a th:href="@{'/promote/1/' + ${user.getUsername()}}" type="button" class="btn btn-outline-light btn-sm" >Promote</a>
+                            <a th:href="@{'/demote/0/' + ${user.getUsername()}}" type="button" class="btn btn-outline-light btn-sm" >Demote</a>
                         </td>
                 </tr>
                 <div sec:authorize="hasAuthority('ROOT')" class="text-white">
@@ -49,7 +49,7 @@
                         <td th:text="${user.getEmail()}"></td>
                         <td th:text="${user.getRole()}"></td>
                         <td>
-                            <a th:href="@{'/demote/ADMIN/' + ${user.getUsername()}}" type="button" class="btn btn-outline-light btn-sm" >Demote</a>
+                            <a th:href="@{'/demote/1/' + ${user.getUsername()}}" type="button" class="btn btn-outline-light btn-sm" >Demote</a>
                         </td>
                     </tr>
                 </div>

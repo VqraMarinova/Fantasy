@@ -19,28 +19,28 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-
     @Autowired
-    private UserService userService;
-
+    private UserService usersService;
 
     @Autowired
     private AuthenticationSuccessHandler authenticationSuccessHandler;
-
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-
         http
                 .csrf().disable()
+
                 .authorizeRequests()
+
+                //TODO to remove next two lines
+                .antMatchers("/**")
+                .permitAll()
+
                 .antMatchers("/")
                 .permitAll()
-                .antMatchers("/js/*", "/css/*", "/img/*")
+                .antMatchers("/favicon.ico", "/js/*", "/css/*", "/img/*")
                 .permitAll()
                 .antMatchers()
                 .permitAll()
@@ -56,7 +56,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .permitAll()
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .successForwardUrl("/home")
+                .successForwardUrl("/")
                 .successHandler(authenticationSuccessHandler)
                 .and()
                 .logout()
@@ -66,7 +66,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        return userService;
+        return usersService;
     }
 
     @Bean
@@ -77,8 +77,9 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(userService)
+                .userDetailsService(usersService)
                 .passwordEncoder(passwordEncoder);
     }
+
 
 }

@@ -5,6 +5,7 @@ import com.vyara.fantasy.data.models.Binding.ChangePasswordModel;
 import com.vyara.fantasy.data.models.service.ChangeEmailServiceModel;
 import com.vyara.fantasy.data.models.service.ChangePasswordServiceModel;
 import com.vyara.fantasy.services.UserService;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.AbstractBindingResult;
@@ -15,36 +16,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 
 @Controller
+@AllArgsConstructor
 public class ProfileController {
     private final ModelMapper modelMapper;
     private final UserService userService;
 
-    public ProfileController(ModelMapper modelMapper, UserService userService) {
-        this.modelMapper = modelMapper;
-        this.userService = userService;
+    @ModelAttribute("emailModel")
+    public ChangeEmailModel emailModel (){
+        return new ChangeEmailModel();
+    }
+
+    @ModelAttribute("passwordModel")
+    public ChangePasswordModel passwordModel (){
+        return new ChangePasswordModel();
     }
 
     @GetMapping("/profile")
-    public String getRegisterForm() {
+    public String getRegisterForm(@ModelAttribute("emailModel") ChangeEmailModel emailModel, @ModelAttribute("passwordModel") ChangePasswordModel passwordModel) {
         return "profile";
     }
 
     @PostMapping("/changePassword")
-    public String changePassword(@Valid @ModelAttribute ChangePasswordModel changePasswordModel, AbstractBindingResult bindingResult) throws Exception {
+    public String changePassword(@Valid @ModelAttribute("passwordModel") ChangePasswordModel passwordModel, AbstractBindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
            throw new Exception();
         }
-        this.userService.changePassword(this.modelMapper.map(changePasswordModel, ChangePasswordServiceModel.class));
+        this.userService.changePassword(this.modelMapper.map(passwordModel, ChangePasswordServiceModel.class));
         return "profile";
     }
 
 
     @PostMapping("/changeEmail")
-    public String changeEmail(@Valid @ModelAttribute ChangeEmailModel changeEmailModel, AbstractBindingResult bindingResult) throws Exception {
+    public String changeEmail(@Valid @ModelAttribute("emailModel") ChangeEmailModel emailModel, AbstractBindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception();
         }
-        this.userService.changeEmail(this.modelMapper.map(changeEmailModel, ChangeEmailServiceModel.class));
+        this.userService.changeEmail(this.modelMapper.map(emailModel, ChangeEmailServiceModel.class));
         return "profile";
     }
 
