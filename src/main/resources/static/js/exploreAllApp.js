@@ -2,14 +2,7 @@
 const items =(window.location.pathname.toString().split('/'))[2];
 
 
-const loader = {
-    show: () => {
-        $('#page-loader').show();
-    },
-    hide: () => {
-        $('#page-loader').hide();
-    },
-};
+
 window.addEventListener('load', async function () {
 
     const targetDiv = document.getElementById('exploreItems');
@@ -136,13 +129,13 @@ window.addEventListener('load', async function () {
         if (target.tagName !== 'BUTTON') {
             return;
         }
-        loader.show();
+
         if (target.id === 'editQuote') {
             await renderEditQuote(e);
-            loader.hide();
+
         } else if (target.id === 'cancel') {
             await renderItems();
-            loader.hide();
+
         }
 
     }

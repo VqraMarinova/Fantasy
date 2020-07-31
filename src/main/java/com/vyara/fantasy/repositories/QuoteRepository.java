@@ -5,4 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface QuoteRepository extends JpaRepository<SmartQuote, Long> {
 
+    boolean existsByAuthorAndContent(String author, String content);
+
+    SmartQuote getByQuoteOfTheDayIsTrue();
 }

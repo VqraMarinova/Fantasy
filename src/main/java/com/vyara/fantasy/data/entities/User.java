@@ -42,7 +42,7 @@ public class User extends BaseEntity implements UserDetails {
 
     //SpringSecurity:
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> authorities;
 
     @Override

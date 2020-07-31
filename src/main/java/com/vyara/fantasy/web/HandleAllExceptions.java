@@ -5,12 +5,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
-public class HandleAllExceptions {
+public class HandleAllExceptions  {
 
-    @ExceptionHandler(Throwable.class)
-    public ModelAndView handleException(Throwable exception) {
+
+    @ExceptionHandler({Throwable.class})
+    public ModelAndView handleExceptions(Throwable e) {
         ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("message", exception.getMessage());
+        Throwable throwable = e;
+        while (throwable.getCause() != null) {
+            throwable = throwable.getCause();
+        }
+        modelAndView.addObject("message", throwable.getMessage());
 
         return modelAndView;
     }

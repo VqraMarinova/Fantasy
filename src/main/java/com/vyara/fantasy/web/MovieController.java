@@ -1,5 +1,6 @@
 package com.vyara.fantasy.web;
 
+import com.vyara.fantasy.config.Constants;
 import com.vyara.fantasy.data.models.Binding.MovieCreateEditModel;
 import com.vyara.fantasy.data.models.service.MovieCreateEditServiceModel;
 import com.vyara.fantasy.services.MovieService;
@@ -30,11 +31,16 @@ public class MovieController {
     }
 
     @PostMapping("/add-movie")
-    public String AddMovie(@Valid @ModelAttribute MovieCreateEditModel movieCreateEditModel, AbstractBindingResult bindingResult) throws Exception {
+    public String AddMovie(@Valid @ModelAttribute MovieCreateEditModel model, AbstractBindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             return "addMovie";
         }
-        movieService.addNewMovie(this.modelMapper.map(movieCreateEditModel, MovieCreateEditServiceModel.class));
+        if (model.getTrailerLink().trim().isEmpty()){
+            model.setTrailerLink(Constants.MOVIE_DEFAULT_VIDEO_URL);
+        } else {
+            model.setTrailerLink(model.getTrailerLink().replace("watch?v=", "embed/"));
+        }
+        movieService.addNewMovie(this.modelMapper.map(model, MovieCreateEditServiceModel.class));
         return "redirect:/home";
     }
 

@@ -1,5 +1,6 @@
 package com.vyara.fantasy.services.implementations;
 
+import com.vyara.fantasy.config.EntityAlreadyExistsException;
 import com.vyara.fantasy.data.entities.Movie;
 import com.vyara.fantasy.data.models.ViewModels.AllMoviesViewModel;
 import com.vyara.fantasy.data.models.ViewModels.MovieViewModel;
@@ -8,6 +9,7 @@ import com.vyara.fantasy.repositories.MovieRepository;
 import com.vyara.fantasy.services.CommentService;
 import com.vyara.fantasy.services.MovieService;
 import com.vyara.fantasy.services.RatingService;
+import com.vyara.fantasy.services.validation.EntityValidator;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -23,15 +25,16 @@ public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
     private final RatingService ratingService;
     private final CommentService commentService;
+    private final EntityValidator entityValidator;
 
 
 
 
     @Override
     public void addNewMovie(MovieCreateEditServiceModel model) {
-
-        //TODO
-        //To check if movie already exists
+        if (!this.entityValidator.isMovieValid(model)){
+            throw new EntityAlreadyExistsException("Movie already exists");
+        }
         Movie movie = this.modelMapper.map(model, Movie.class);
         generateReleaseDate(movie, model);
 
@@ -84,7 +87,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     private void generateReleaseDate(Movie movie, MovieCreateEditServiceModel model) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate releaseDate = LocalDate.parse(model.getReleaseDate(), formatter);
 
         movie.setReleaseDate(releaseDate);

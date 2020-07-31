@@ -8,7 +8,7 @@ export async function renderBook(id, item) {
     
     <p class="text-muted">Title: <span class="h4 text-white">${book.title}</span> </p> 
     <p class="text-muted">Rating: <span class="h5 text-white">${book.rating} / 5</span> </p> 
-    <img src="https://image.shutterstock.com/image-illustration/chinese-style-fantasy-scenes3d-rendering-600w-647884516.jpg" class="img-fluid" alt="Responsive image">
+    <img src="${book.image}" class="img-thumbnail img-fluid max-width: 100% height: auto" id="bookImage" alt="Responsive image">
     <br>  <br>
     <p class="text-muted">Author: <span class="h5 text-white">${book.author}</span> </p>              
                   <p class="text-muted">Description: </p>
@@ -57,7 +57,7 @@ export async function renderMovie(id, item) {
     
     <p class="text-muted">Title: <span class="h4 text-white">${movie.title}</span> </p> 
     <p class="text-muted">Rating: <span class="h5 text-white">${movie.rating} / 5</span> </p> 
-   <iframe width="560" height="315" src="https://www.youtube.com/embed/ndl1W4ltcmg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+   <iframe width="560" height="315" src="${movie.trailerLink}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     <br>  <br>
     <p class="text-muted">Cast: <span class="h5 text-white">${movie.cast}</span> </p>              
     <p class="text-muted">Director: <span class="h5 text-white">${movie.director}</span> </p>              
@@ -214,36 +214,38 @@ export function RenderEditComment(commentId, prevText, item, id ) {
 export async function RenderEditBook(id) {
     const book = await (await fetch(`/api/explore/book/${id}`)).json();
     return `
-            <form class="mx-auto w-50" action="/edit/book/${id}" method="post">
+            <form class="mx-auto w-50" action="/edit/book/${id}" method="post" th:object="${model}" enctype="multipart/form-data">
         <div class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
                 <label for="title" class="h4 mb-2 text-white">Title</label>
             </div>
-            <input type="text" class="form-control" id="title" value="${book.title}" name="title"/>
+            <input type="text" class="form-control" id="title" value="${book.title}" name="title" th:field="*{title}"/>
         </div>
-        <div class="form-group">
-            <div class="label-holder textCol d-flex justify-content-center">
-                <label for="image" class="h4 mb-2 text-white" >Image...todo</label>
-            </div>
-            <input type="text" class="form-control" id="image" value="${book.image}" name="image"/>
+       <br>
+        <div class="form-group text-center">
+            <br>
+                <label for="image" class="h5 mb-2 text-white">Upload Book, book cover or other related image(optional):</label>
+            <div class="textCol d-flex justify-content-center">
+            <input type="file"  id="image" name="image" th:field="*{image}"/>
+            </div><br>
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="description" class="h4 mb-2">Description</label>
             </div>
-            <textarea type="text" class="form-control" rows="3" id="description"  name="description">${book.description}</textarea>
+            <textarea type="text" th:field="*{description}" class="form-control" rows="3" id="description"  name="description">${book.description}</textarea>
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="author" class="h4 mb-2">Author name</label>
             </div>
-            <input type="text" class="form-control" id="author"  value="${book.author}" name="author"/>
+            <input type="text" th:field="*{author}" class="form-control" id="author"  value="${book.author}" name="author"/>
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="releaseDate" class="h4 mb-2">Release Date</label>
             </div>
-            <input type="date" class="form-control" id="releaseDate" value="${book.releaseDate}" name="releaseDate"/>
+            <input type="date"  th:field="*{releaseDate}" class="form-control" id="releaseDate" value="${book.releaseDate}" name="releaseDate"/>
         </div>
         <div class="button-holder d-flex justify-content-center">
             <button class="btn btn-outline-danger btn-sm" type="submit">Done</button>

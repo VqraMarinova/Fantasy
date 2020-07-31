@@ -13,4 +13,8 @@ public interface QuoteService {
     void deleteQuote(Long id);
 
     List<QuoteReturnModel> getAllQuotes();
+
+    void chooseUpQuoteOfTheDay();
+
+    QuoteReturnModel getQuoteOfTheDay();
 }

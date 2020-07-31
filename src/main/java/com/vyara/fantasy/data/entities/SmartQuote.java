@@ -23,5 +23,8 @@ public class SmartQuote extends BaseEntity {
     @Column(columnDefinition = "NVARCHAR(400)")
     private String content;
 
+    @Column
+    private boolean quoteOfTheDay = false;
+
 
 }

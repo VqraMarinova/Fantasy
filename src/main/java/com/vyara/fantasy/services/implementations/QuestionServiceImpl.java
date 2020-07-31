@@ -28,9 +28,6 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void addNewQuestion(QuestionCreateEditServiceModel questionCreateEditServiceModel) {
 
-        //TODO
-        //To check if book already exists
-
         Question question = this.modelMapper.map(questionCreateEditServiceModel, Question.class);
 
         question.setUser(this.authenticatedUserService.getCurrentUser());

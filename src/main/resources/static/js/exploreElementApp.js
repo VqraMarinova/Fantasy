@@ -3,17 +3,11 @@ const [item, id] =(window.location.pathname.toString().split('/')).slice(-2);
 import * as render from './RenderElement.js'
 
 
-const loader = {
-    show: () => {
-        $('#page-loader').show();
-    },
-    hide: () => {
-        $('#page-loader').hide();
-    },
-};
+
+
 window.addEventListener('load', async function () {
     const targetDiv = document.getElementById('exploreItems');
-    loader.show();
+
     await renderItem();
 
    async function renderItem() {
@@ -28,7 +22,7 @@ window.addEventListener('load', async function () {
             result = await render.renderQuestion(id, item);
         }
         targetDiv.innerHTML = result;
-        loader.hide();
+
 
     };
 
@@ -38,10 +32,10 @@ window.addEventListener('load', async function () {
         if (target.tagName !== 'BUTTON'){
             return;
         }
-        loader.show();
+
         if (target.id === 'editItem'){
            targetDiv.innerHTML = await EditHandler();
-           loader.hide();
+
         }else if (target.id === 'editComment'){
             const commentId = target.value;
             const div = target.parentElement.previousSibling;
@@ -49,10 +43,10 @@ window.addEventListener('load', async function () {
             div.lastChild.remove();
             div.nextSibling.remove();
             div.innerHTML= render.RenderEditComment(commentId, prevText, item,id);
-            loader.hide();
+
         } else if (target.id === 'cancel') {
            await renderItem();
-           loader.hide();
+
         }
     });
 
