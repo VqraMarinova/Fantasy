@@ -1,10 +1,11 @@
 package com.vyara.fantasy.services.implementations;
 
-import com.vyara.fantasy.config.EntityAlreadyExistsException;
+import com.vyara.fantasy.config.Constants;
 import com.vyara.fantasy.data.entities.Movie;
 import com.vyara.fantasy.data.models.ViewModels.AllMoviesViewModel;
 import com.vyara.fantasy.data.models.ViewModels.MovieViewModel;
 import com.vyara.fantasy.data.models.service.MovieCreateEditServiceModel;
+import com.vyara.fantasy.errors.EntityAlreadyExistsException;
 import com.vyara.fantasy.repositories.MovieRepository;
 import com.vyara.fantasy.services.CommentService;
 import com.vyara.fantasy.services.MovieService;
@@ -35,6 +36,7 @@ public class MovieServiceImpl implements MovieService {
         if (!this.entityValidator.isMovieValid(model)){
             throw new EntityAlreadyExistsException("Movie already exists");
         }
+        setProperInputVideoLinkFormat(model);
         Movie movie = this.modelMapper.map(model, Movie.class);
         generateReleaseDate(movie, model);
 
@@ -64,12 +66,12 @@ public class MovieServiceImpl implements MovieService {
         model.setComments(this.commentService.getCommentByMovie(movie));
         model.setReleaseDate(movie.getReleaseDate().toString());
 
-
         return model;
     }
 
     @Override
     public void editMovie(MovieCreateEditServiceModel model, Long id) {
+        setProperInputVideoLinkFormat(model);
         Movie movie = this.movieRepository.getOne(id);
         generateReleaseDate(movie, model);
         movie.setTitle(model.getTitle());
@@ -92,5 +94,14 @@ public class MovieServiceImpl implements MovieService {
 
         movie.setReleaseDate(releaseDate);
     }
+
+    private void setProperInputVideoLinkFormat(MovieCreateEditServiceModel movieModel) {
+        if (movieModel.getTrailerLink().trim().isEmpty()){
+            movieModel.setTrailerLink(Constants.MOVIE_DEFAULT_VIDEO_URL);
+        } else {
+            movieModel.setTrailerLink(movieModel.getTrailerLink().replace("watch?v=", "embed/"));
+        }
+    }
+
 }
 

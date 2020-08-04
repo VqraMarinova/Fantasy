@@ -149,7 +149,6 @@ window.addEventListener('load', async function () {
         const defAuthor = currentDiv.children[1].innerText;
         const defQuote = (currentDiv.children[0].textContent).slice(1, -1);
 
-        console.log(defQuote)
         currentDiv.innerHTML = `
           <form class="text-right text-white w-50" method="post" action="/edit/quote/${quoteId}" th:object="\${quoteModel}">
       <div class="form-group">
@@ -157,20 +156,13 @@ window.addEventListener('load', async function () {
                 <label for="author" class="h4 mb-2 text-white">Author</label>
             </div>
             <input type="text" class="form-control" id="author" name="author" th:field="*{author}"  maxlength = "100"  minlength = "5" value="${defAuthor}" required/>
-            <ul th:if="\${#fields.hasErrors('author')}">
-                <li th:each="error :  \${#fields.errors('author')}" th:text="\${error}" class="text-danger"></li>
-            </ul>
         </div>
-
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="content" class="h4 mb-2">Quote:</label>
             </div>
             <textarea type="text" class="form-control" rows="3" id="content" name="content" th:field="*{content}" maxlength = "400"  minlength = "30" required>${defQuote}</textarea>
             
-            <ul th:if="\${#fields.hasErrors('content')}">
-                <li th:each="error :  \${#fields.errors('content')}" th:text="\${error}" class="text-danger" ></li>
-            </ul>
         </div>
         <div class="button-holder d-flex justify-content-center">
             <button class="btn btn-outline-danger btn-sm" type="submit">Done</button>

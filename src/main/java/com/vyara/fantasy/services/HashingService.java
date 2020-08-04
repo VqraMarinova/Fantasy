@@ -1,5 +1,7 @@
 package com.vyara.fantasy.services;
 
 public interface HashingService {
-    String hash(String str);
+    String hashContent(String str);
+
+    String hashPass(String str);
 }

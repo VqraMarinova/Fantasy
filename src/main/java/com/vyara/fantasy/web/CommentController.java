@@ -3,7 +3,6 @@ package com.vyara.fantasy.web;
 import com.vyara.fantasy.data.models.Binding.CommentCreateEditModel;
 import com.vyara.fantasy.services.CommentService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.AbstractBindingResult;
@@ -17,7 +16,6 @@ import javax.validation.Valid;
 @Controller
 public class CommentController {
     private final CommentService commentService;
-    private final ModelMapper modelMapper;
 
     @ModelAttribute("commentModel")
     public CommentCreateEditModel commentModel (){

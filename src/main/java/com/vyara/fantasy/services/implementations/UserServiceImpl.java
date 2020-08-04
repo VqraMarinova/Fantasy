@@ -1,11 +1,11 @@
 package com.vyara.fantasy.services.implementations;
 
-import com.vyara.fantasy.config.EntityAlreadyExistsException;
 import com.vyara.fantasy.data.entities.User;
-import com.vyara.fantasy.data.models.ViewModels.CheckUserResponseModel;
+import com.vyara.fantasy.data.models.ViewModels.CheckUserViewModel;
 import com.vyara.fantasy.data.models.service.ChangeEmailServiceModel;
 import com.vyara.fantasy.data.models.service.ChangePasswordServiceModel;
 import com.vyara.fantasy.data.models.service.UserRegisterServiceModel;
+import com.vyara.fantasy.errors.EntityAlreadyExistsException;
 import com.vyara.fantasy.repositories.UserRepository;
 import com.vyara.fantasy.services.AuthenticatedUserService;
 import com.vyara.fantasy.services.HashingService;
@@ -13,7 +13,6 @@ import com.vyara.fantasy.services.RoleService;
 import com.vyara.fantasy.services.UserService;
 import com.vyara.fantasy.services.validation.EntityValidator;
 import lombok.AllArgsConstructor;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -45,7 +44,7 @@ public class UserServiceImpl implements UserService {
             throw new EntityAlreadyExistsException("User already exists");
         }
         User user = modelMapper.map(model, User.class);
-        user.setPassword(hashingService.hash(model.getPassword()));
+        user.setPassword(hashingService.hashPass(model.getPassword()));
         setRoles(user);
         userRepository.save(user);
     }
@@ -71,11 +70,11 @@ public class UserServiceImpl implements UserService {
         User user = this.authenticatedUserService.getCurrentUser();
 
         if (!changePasswordServiceModel.getNewPassword().equals(changePasswordServiceModel.getConfirmPassword())
-                || hashingService.hash(changePasswordServiceModel.getCurrentPassword()).equals(user.getPassword())) {
+                || hashingService.hashPass(changePasswordServiceModel.getCurrentPassword()).equals(user.getPassword())) {
             throw new InvalidAttributesException("Password do not match");
         }
 
-        user.setPassword(hashingService.hash(changePasswordServiceModel.getNewPassword()));
+        user.setPassword(hashingService.hashPass(changePasswordServiceModel.getNewPassword()));
         this.userRepository.save(user);
 
 
@@ -85,7 +84,7 @@ public class UserServiceImpl implements UserService {
     public void changeEmail(ChangeEmailServiceModel changeEmailServiceModel) throws Exception {
         User user = this.authenticatedUserService.getCurrentUser();
         if (!changeEmailServiceModel.getNewEmail().equals(changeEmailServiceModel.getConfirmEmail())
-                || hashingService.hash(changeEmailServiceModel.getPassword()).equals(user.getPassword())) {
+                || hashingService.hashPass(changeEmailServiceModel.getPassword()).equals(user.getPassword())) {
             throw new InvalidAttributesException("Input data do not match");
         }
 
@@ -95,12 +94,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<CheckUserResponseModel> getCheckUsers(){
-        List<CheckUserResponseModel> models = new ArrayList<>();
+    public List<CheckUserViewModel> getCheckUsers(){
+        List<CheckUserViewModel> models = new ArrayList<>();
         this.userRepository.findAll().forEach(u->{
-            CheckUserResponseModel model = new CheckUserResponseModel();
-            model.setUsername(DigestUtils.sha256Hex(u.getUsername()));
-            model.setEmail(DigestUtils.sha256Hex(u.getEmail()));
+            CheckUserViewModel model = new CheckUserViewModel();
+            model.setUsername(this.hashingService.hashContent(u.getUsername()));
+            model.setEmail(this.hashingService.hashContent(u.getEmail()));
             models.add(model);
 
         });

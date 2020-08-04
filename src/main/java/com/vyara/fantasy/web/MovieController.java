@@ -1,6 +1,5 @@
 package com.vyara.fantasy.web;
 
-import com.vyara.fantasy.config.Constants;
 import com.vyara.fantasy.data.models.Binding.MovieCreateEditModel;
 import com.vyara.fantasy.data.models.service.MovieCreateEditServiceModel;
 import com.vyara.fantasy.services.MovieService;
@@ -38,14 +37,10 @@ public class MovieController {
         if (bindingResult.hasErrors()) {
             return "addMovie";
         }
-        if (movieModel.getTrailerLink().trim().isEmpty()){
-            movieModel.setTrailerLink(Constants.MOVIE_DEFAULT_VIDEO_URL);
-        } else {
-            movieModel.setTrailerLink(movieModel.getTrailerLink().replace("watch?v=", "embed/"));
-        }
         movieService.addNewMovie(this.modelMapper.map(movieModel, MovieCreateEditServiceModel.class));
         return "redirect:/home";
     }
+
 
     @PreAuthorize("hasAuthority('MODERATOR')")
     @PostMapping("/edit/movie/{id}")

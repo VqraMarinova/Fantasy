@@ -1,7 +1,7 @@
 package com.vyara.fantasy.web;
 
 import com.vyara.fantasy.data.models.Binding.UserRegisterModel;
-import com.vyara.fantasy.data.models.ViewModels.CheckUserResponseModel;
+import com.vyara.fantasy.data.models.ViewModels.CheckUserViewModel;
 import com.vyara.fantasy.data.models.service.UserRegisterServiceModel;
 import com.vyara.fantasy.services.UserService;
 import lombok.AllArgsConstructor;
@@ -48,7 +48,7 @@ public class UserController {
 
     @GetMapping("/api/check-users-validity")
     @ResponseBody
-    public List<CheckUserResponseModel> getUsersValidity(){
+    public List<CheckUserViewModel> getUsersValidity(){
        return this.userService.getCheckUsers();
     }
 

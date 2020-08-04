@@ -2,7 +2,7 @@ package com.vyara.fantasy.web;
 
 import com.vyara.fantasy.data.models.ViewModels.AllQuestionsViewModel;
 import com.vyara.fantasy.data.models.ViewModels.AllShortStoriesViewModel;
-import com.vyara.fantasy.data.models.ViewModels.QuoteReturnModel;
+import com.vyara.fantasy.data.models.ViewModels.QuoteViewModel;
 import com.vyara.fantasy.services.QuestionService;
 import com.vyara.fantasy.services.QuoteService;
 import com.vyara.fantasy.services.ShortStoryService;
@@ -38,7 +38,7 @@ public class HomeController {
 
     @GetMapping("/")
     public ModelAndView getIndex(ModelAndView modelAndView) {
-        QuoteReturnModel quote = this.quoteService.getQuoteOfTheHour();
+        QuoteViewModel quote = this.quoteService.getQuoteOfTheHour();
         modelAndView.addObject("quoteOfTheDay", quote);
         modelAndView.setViewName("index");
         return modelAndView;

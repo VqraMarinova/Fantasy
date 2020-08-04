@@ -7,10 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class QuoteReturnModel {
-
-    private Long id;
-    private String author;
-    private String content;
-
+public class CheckUserViewModel {
+    private String username;
+    private String email;
 }

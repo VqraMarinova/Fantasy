@@ -1,6 +1,6 @@
 package com.vyara.fantasy.services.implementations;
 
-import com.vyara.fantasy.config.EntityAlreadyExistsException;
+import com.vyara.fantasy.errors.EntityAlreadyExistsException;
 import com.vyara.fantasy.data.entities.Book;
 import com.vyara.fantasy.data.models.ViewModels.AllBooksViewModel;
 import com.vyara.fantasy.data.models.ViewModels.BookViewModel;

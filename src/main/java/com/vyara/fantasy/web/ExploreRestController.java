@@ -69,7 +69,7 @@ public class ExploreRestController {
     }
 
     @GetMapping(value = "/api/explore/quotes")
-    public List<QuoteReturnModel> getQuotes() {
+    public List<QuoteViewModel> getQuotes() {
         return this.quoteService.getAllQuotes();
 
     }

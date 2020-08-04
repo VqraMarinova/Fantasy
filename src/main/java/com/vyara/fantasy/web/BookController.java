@@ -56,7 +56,7 @@ public class BookController {
     @PostMapping("/edit/book/{id}")
     public String editBook(@Valid @ModelAttribute("bookModel") BookCreateEditModel bookModel, @PathVariable Long id, AbstractBindingResult bindingResult) throws IOException {
         if (bindingResult.hasErrors()) {
-            return String.format("redirect:/edit/book/%s",id);
+            return String.format("redirect:/edit/movie/%s",id);
         }
         BookCreateEditServiceModel book = this.modelMapper.map(bookModel, BookCreateEditServiceModel.class);
         if (!bookModel.getImage().isEmpty()) {

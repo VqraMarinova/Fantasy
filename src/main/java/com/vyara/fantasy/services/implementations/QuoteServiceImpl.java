@@ -1,8 +1,8 @@
 package com.vyara.fantasy.services.implementations;
 
-import com.vyara.fantasy.config.EntityAlreadyExistsException;
+import com.vyara.fantasy.errors.EntityAlreadyExistsException;
 import com.vyara.fantasy.data.entities.SmartQuote;
-import com.vyara.fantasy.data.models.ViewModels.QuoteReturnModel;
+import com.vyara.fantasy.data.models.ViewModels.QuoteViewModel;
 import com.vyara.fantasy.data.models.service.QuoteCreateEditServiceModel;
 import com.vyara.fantasy.repositories.QuoteRepository;
 import com.vyara.fantasy.services.QuoteService;
@@ -44,10 +44,10 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    public List<QuoteReturnModel> getAllQuotes(){
-        List<QuoteReturnModel> models = new ArrayList<>();
+    public List<QuoteViewModel> getAllQuotes(){
+        List<QuoteViewModel> models = new ArrayList<>();
         this.quoteRepository.findAll().forEach(q ->{
-            models.add(this.modelMapper.map(q, QuoteReturnModel.class));
+            models.add(this.modelMapper.map(q, QuoteViewModel.class));
         });
 
         return models;
@@ -70,8 +70,8 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    public QuoteReturnModel getQuoteOfTheHour(){
-       return this.modelMapper.map(this.quoteRepository.getByQuoteOfTheDayIsTrue(), QuoteReturnModel.class);
+    public QuoteViewModel getQuoteOfTheHour(){
+       return this.modelMapper.map(this.quoteRepository.getByQuoteOfTheDayIsTrue(), QuoteViewModel.class);
 
     }
 
