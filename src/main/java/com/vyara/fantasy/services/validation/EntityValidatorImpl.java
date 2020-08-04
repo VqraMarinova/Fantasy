@@ -22,8 +22,8 @@ public class EntityValidatorImpl implements EntityValidator {
 
     @Override
     public boolean isUserValid(UserRegisterServiceModel user) {
-        return this.isEmailValid(user.getEmail()) &&
-                this.isUsernameFree(user.getUsername());
+        return !userRepository.existsByUsername(user.getUsername()) &&
+                !userRepository.existsByEmail(user.getEmail());
     }
 
 
@@ -46,14 +46,6 @@ public class EntityValidatorImpl implements EntityValidator {
     @Override
     public boolean arePasswordsValid(String password, String secondPassword) {
         return password.equals(secondPassword);
-    }
-
-    private boolean isUsernameFree(String username) {
-        return !userRepository.existsByUsername(username);
-    }
-
-    private boolean isEmailValid(String email) {
-        return !userRepository.existsByEmail(email);
     }
 
 

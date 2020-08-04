@@ -14,7 +14,7 @@ public interface QuoteService {
 
     List<QuoteReturnModel> getAllQuotes();
 
-    void chooseUpQuoteOfTheDay();
+    void chooseUpQuoteOfTheHour();
 
-    QuoteReturnModel getQuoteOfTheDay();
+    QuoteReturnModel getQuoteOfTheHour();
 }

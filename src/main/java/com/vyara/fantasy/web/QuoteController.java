@@ -21,27 +21,33 @@ public class QuoteController {
     private final ModelMapper modelMapper;
     private final QuoteService quoteService;
 
-
+    @ModelAttribute("quoteModel")
+    public QuoteCreateEditModel quoteModel (){
+        return new QuoteCreateEditModel();
+    }
 
     @GetMapping("/add-quote")
-    public String getAddQuoteForm() {
+    public String getAddQuoteForm(@ModelAttribute("quoteModel") QuoteCreateEditModel quoteModel) {
         return "addQuote";
     }
 
     @PostMapping("/add-quote")
-    public String AddQuote(@Valid @ModelAttribute QuoteCreateEditModel quoteCreateEditModel, AbstractBindingResult bindingResult) throws Exception {
+    public String AddQuote(@Valid @ModelAttribute("quoteModel") QuoteCreateEditModel quoteModel, AbstractBindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             return "addQuote";
         }
-        quoteService.addNewQuote(this.modelMapper.map(quoteCreateEditModel, QuoteCreateEditServiceModel.class));
+        quoteService.addNewQuote(this.modelMapper.map(quoteModel, QuoteCreateEditServiceModel.class));
         return "redirect:/home";
     }
 
     @PreAuthorize("hasAuthority('MODERATOR')")
     @PostMapping("/edit/quote/{id}")
-    public String editQuote(@Valid @ModelAttribute QuoteCreateEditModel quoteCreateEditModel, @PathVariable Long id ){
+    public String editQuote(@Valid @ModelAttribute("quoteModel") QuoteCreateEditModel quoteModel, @PathVariable Long id, AbstractBindingResult bindingResult  ){
+        if (bindingResult.hasErrors()) {
+            return String.format("redirect:/edit/quote/%s",id);
+        }
         this.quoteService.editQuote(this.modelMapper.map(
-                quoteCreateEditModel, QuoteCreateEditServiceModel.class
+                quoteModel, QuoteCreateEditServiceModel.class
         ), id);
         return "redirect:/explore/quotes";
     }

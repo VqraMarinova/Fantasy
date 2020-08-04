@@ -30,17 +30,14 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-
+                .csrf()
+                .disable()
                 .authorizeRequests()
-
-                //TODO to remove next two lines
-                .antMatchers("/**")
-                .permitAll()
-
                 .antMatchers("/")
                 .permitAll()
                 .antMatchers("/favicon.ico", "/js/*", "/css/*", "/img/*")
+                .permitAll()
+                .antMatchers("/api/check-users-validity")
                 .permitAll()
                 .antMatchers()
                 .permitAll()
@@ -59,9 +56,16 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .successForwardUrl("/")
                 .successHandler(authenticationSuccessHandler)
                 .and()
+                .rememberMe()
+                .rememberMeParameter("remember")
+                .key("remember Me Encryption Key")
+                .rememberMeCookieName("rememberMeCookie")
+                .tokenValiditySeconds(10000)
+                .and()
                 .logout()
                 .permitAll();
     }
+
 
     @Bean
     @Override

@@ -13,42 +13,61 @@
         <div class="container">
     <h1 class="text-center text-white">Add new movie</h1>
     <hr class="hr-3"/>
-    <form class="mx-auto w-50" action="/add-movie" method="post">
+    <form class="mx-auto w-50"  method="post" th:action="@{/add-movie}" th:object="${movieModel}">
         <div class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
                 <label for="title" class="h4 mb-2 text-white">Title</label>
             </div>
-            <input type="text" class="form-control" id="title" name="title"/>
+            <input type="text" class="form-control" id="title" name="title" th:field="*{title}" maxlength = "100"  minlength = "5" required/>
+            <ul th:if="${#fields.hasErrors('title')}">
+                <li th:each="error :  ${#fields.errors('title')}" th:text="${error}" class="text-danger"></li>
+            </ul>
+
         </div>
         <div class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
-                <label for="trailerLink" class="h4 mb-2 text-white">Video Trailer Link (optional)</label>
+                <label for="trailerLink" class="h5 mb-2 text-white">Video Trailer Link (Optional, Youtube links only)</label>
             </div>
-            <input type="text" class="form-control" id="trailerLink" name="trailerLink"/>
+            <input type="text" class="form-control" id="trailerLink" name="trailerLink" th:field="*{trailerLink}" placeholder="https://www.youtube.com/..."/>
+            <ul th:if="${#fields.hasErrors('trailerLink')}">
+                <li th:each="error :  ${#fields.errors('trailerLink')}" th:text="${error}" class="text-danger"></li>
+            </ul>
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="description" class="h4 mb-2">Description</label>
             </div>
-            <textarea type="text" class="form-control" rows="3" id="description" name="description"></textarea>
+            <textarea type="text" class="form-control" rows="3" id="description" name="description" th:field="*{description}" maxlength = "600"  minlength = "30" required></textarea>
+            <ul th:if="${#fields.hasErrors('description')}">
+                <li th:each="error :  ${#fields.errors('description')}" th:text="${error}" class="text-danger"></li>
+            </ul>
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="director" class="h4 mb-2">Director</label>
             </div>
-            <input type="text" class="form-control" id="director" name="director"/>
+            <input type="text" class="form-control" id="director" name="director" th:field="*{director}" maxlength = "100"  minlength = "5" required/>
+            <ul th:if="${#fields.hasErrors('director')}">
+                <li th:each="error :  ${#fields.errors('director')}" th:text="${error}" class="text-danger"></li>
+            </ul>
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="cast" class="h4 mb-2">Cast</label>
             </div>
-            <input type="text" class="form-control" id="cast" name="cast"/>
+            <input type="text" class="form-control" id="cast" name="cast" th:field="*{cast}" maxlength = "250"  minlength = "5" required/>
+            <ul th:if="${#fields.hasErrors('cast')}">
+                <li th:each="error :  ${#fields.errors('cast')}" th:text="${error}" class="text-danger"></li>
+            </ul>
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="releaseDate"  class="h4 mb-2">Release Date</label>
             </div>
-            <input type="date" class="form-control" id="releaseDate" name="releaseDate"/>
+            <input type="date" class="form-control" id="releaseDate" name="releaseDate" th:field="*{releaseDate}" required/>
+            <ul th:if="${#fields.hasErrors('releaseDate')}">
+                <li th:each="error :  ${#fields.errors('releaseDate')}" th:text="${error}" class="text-danger"></li>
+            </ul>
         </div>
         <div class="button-holder d-flex justify-content-center">
             <button class="btn btn-info text-white mb-3" type="submit">Add</button>

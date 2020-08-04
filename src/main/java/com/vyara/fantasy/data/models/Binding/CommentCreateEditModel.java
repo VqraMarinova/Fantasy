@@ -12,8 +12,8 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class CommentCreateEditModel {
 
-    @NotNull
-    @Size(min=10, max=600)
+    @NotNull(message = "Field can not be empty")
+    @Size(min=10, max=600, message = "Please enter enter between 10 and 600 characters")
     private String content;
 
 }

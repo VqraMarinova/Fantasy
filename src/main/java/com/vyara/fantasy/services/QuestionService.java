@@ -16,4 +16,6 @@ public interface QuestionService {
     void deleteQuestion(Long id);
 
     void editQuestion(QuestionCreateEditServiceModel map, Long id);
+
+    List<AllQuestionsViewModel> getAllQuestionsForUser();
 }

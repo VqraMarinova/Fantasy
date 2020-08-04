@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -27,26 +26,26 @@ public class BookController {
     private final CloudService cloudService;
 
 
-    @ModelAttribute("model")
-    public BookCreateEditModel model (){
+    @ModelAttribute("bookModel")
+    public BookCreateEditModel bookModel (){
         return new BookCreateEditModel();
     }
 
     @GetMapping("/add-book")
-    public String getAddBookForm(@ModelAttribute("model") BookCreateEditModel model) {
+    public String getAddBookForm(@ModelAttribute("bookModel") BookCreateEditModel bookModel) {
         return "addBook";
     };
 
     @PostMapping("/add-book")
-    public String AddBook(ModelAndView modelAndView, @Valid @ModelAttribute("model") BookCreateEditModel model, AbstractBindingResult bindingResult) throws Exception {
+    public String AddBook(@Valid @ModelAttribute("bookModel") BookCreateEditModel bookModel, AbstractBindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             return "addBook";
         }
-        BookCreateEditServiceModel book = this.modelMapper.map(model, BookCreateEditServiceModel.class);
-        if (model.getImage().isEmpty()) {
+        BookCreateEditServiceModel book = this.modelMapper.map(bookModel, BookCreateEditServiceModel.class);
+        if (bookModel.getImage().isEmpty()) {
             book.setImage(Constants.BOOK_DEFAULT_IMAGE);
         } else {
-            book.setImage(cloudService.uploadImage(model.getImage()));
+            book.setImage(cloudService.uploadImage(bookModel.getImage()));
         }
 
         bookService.addNewBook(book);
@@ -55,13 +54,13 @@ public class BookController {
 
     @PreAuthorize("hasAuthority('MODERATOR')")
     @PostMapping("/edit/book/{id}")
-    public String editBook(ModelAndView modelAndView, @Valid @ModelAttribute("model") BookCreateEditModel model, @PathVariable Long id, AbstractBindingResult bindingResult ) throws IOException {
+    public String editBook(@Valid @ModelAttribute("bookModel") BookCreateEditModel bookModel, @PathVariable Long id, AbstractBindingResult bindingResult) throws IOException {
         if (bindingResult.hasErrors()) {
-            return String.format("redirect:/explore/book/%s",id);
+            return String.format("redirect:/edit/book/%s",id);
         }
-        BookCreateEditServiceModel book = this.modelMapper.map(model, BookCreateEditServiceModel.class);
-        if (!model.getImage().isEmpty()) {
-            book.setImage(cloudService.uploadImage(model.getImage()));
+        BookCreateEditServiceModel book = this.modelMapper.map(bookModel, BookCreateEditServiceModel.class);
+        if (!bookModel.getImage().isEmpty()) {
+            book.setImage(cloudService.uploadImage(bookModel.getImage()));
         }
 
         this.bookService.editBook(book, id);

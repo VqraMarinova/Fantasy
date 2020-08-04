@@ -54,7 +54,7 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    public void chooseUpQuoteOfTheDay() {
+    public void chooseUpQuoteOfTheHour() {
         long leftLimit = 0L;
         long rightLimit = (this.quoteRepository.count());
         long index = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
@@ -70,7 +70,7 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    public QuoteReturnModel getQuoteOfTheDay(){
+    public QuoteReturnModel getQuoteOfTheHour(){
        return this.modelMapper.map(this.quoteRepository.getByQuoteOfTheDayIsTrue(), QuoteReturnModel.class);
 
     }

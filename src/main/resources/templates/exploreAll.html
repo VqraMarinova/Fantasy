@@ -7,7 +7,7 @@
 >
 <th:block th:include="~{fragments/head}"/>
 <link rel="stylesheet" href="/css/explore.css">
-<link rel="stylesheet" href="/css/loader.css">
+
 <body>
 <th:block th:include="~{fragments/header}"/>
 <main>
@@ -21,18 +21,12 @@
                     <li><a href="/explore/movies" >Movies</a></li>
                     <li><a href="/explore/stories" >Short stories</a></li>
                     <li><a href="/explore/questions" >Community Questions</a></li>
-                    <li><a href="/explore/quotes" >Community Favorite Quotes</a></li>
+                    <li><a href="/explore/quotes" >Famous Quotes</a></li>
                 </ul>
             </div> <!-- /#admin-sidebar -->
             <div id="admin-main-control" class="col-md-10 p-x-3 p-y-1">
                 <div id="exploreItems"></div>
-                <div>
-                    <div>
-                    <h5 class="text-white">Quote of the day:</h5>
-                    </div><br>
-                <p class="text-white"><em>&#65282;<span th:text="${quoteOfTheDay.getContent()}"></span>&#65282;</em></p>
-                <p class="blockquote-footer text-info"><span th:text="${quoteOfTheDay.getAuthor()}"></span></p>
-                </div>
+
             </div>
             </div> <!-- /#admin-main-control -->
         </div> <!-- /.row -->

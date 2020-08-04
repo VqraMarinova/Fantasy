@@ -3,6 +3,7 @@ package com.vyara.fantasy.web;
 import com.vyara.fantasy.data.models.Binding.QuestionCreateEditModel;
 import com.vyara.fantasy.data.models.service.QuestionCreateEditServiceModel;
 import com.vyara.fantasy.services.QuestionService;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -15,35 +16,39 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 
 @Controller
+@AllArgsConstructor
 public class QuestionController {
     private final ModelMapper modelMapper;
     private final QuestionService questionService;
 
-    public QuestionController(ModelMapper modelMapper, QuestionService questionService) {
-        this.modelMapper = modelMapper;
-        this.questionService = questionService;
+    @ModelAttribute("questionModel")
+    public QuestionCreateEditModel questionModel (){
+        return new QuestionCreateEditModel();
     }
 
 
     @GetMapping("/add-question")
-    public String getAddQuestionForm() {
+    public String getAddQuestionForm(@ModelAttribute("questionModel") QuestionCreateEditModel questionModel) {
         return "addQuestion";
     }
 
     @PostMapping("/add-question")
-    public String AddQuestion(@Valid @ModelAttribute QuestionCreateEditModel questionCreateEditModel, AbstractBindingResult bindingResult) throws Exception {
+    public String AddQuestion(@Valid @ModelAttribute("questionModel") QuestionCreateEditModel questionModel, AbstractBindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             return "addQuestion";
         }
-        questionService.addNewQuestion(this.modelMapper.map(questionCreateEditModel, QuestionCreateEditServiceModel.class));
+        questionService.addNewQuestion(this.modelMapper.map(questionModel, QuestionCreateEditServiceModel.class));
         return "redirect:/home";
     }
 
     @PreAuthorize("hasAuthority('MODERATOR')")
     @PostMapping("/edit/question/{id}")
-    public String editQuestion(@Valid @ModelAttribute QuestionCreateEditModel questionCreateEditModel, @PathVariable Long id ){
+    public String editQuestion(@Valid @ModelAttribute("model") QuestionCreateEditModel questionModel, @PathVariable Long id, AbstractBindingResult bindingResult ){
+        if (bindingResult.hasErrors()) {
+            return String.format("redirect:/edit/question/%s",id);
+        }
         this.questionService.editQuestion(this.modelMapper.map(
-                questionCreateEditModel, QuestionCreateEditServiceModel.class
+                questionModel, QuestionCreateEditServiceModel.class
         ), id);
         return String.format("redirect:/explore/question/%s",id);
     }

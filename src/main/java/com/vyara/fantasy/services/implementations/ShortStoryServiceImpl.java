@@ -90,5 +90,20 @@ public class ShortStoryServiceImpl implements ShortStoryService {
         this.shortStoryRepository.deleteById(id);
 
     }
+
+    @Override
+    public List<AllShortStoriesViewModel> getAllStoriesForUser(){
+        List<AllShortStoriesViewModel> allStoriesForUSer = new ArrayList<>();
+
+        this.shortStoryRepository.getAllByUser(authenticatedUserService.getCurrentUser()).forEach(s->{
+            AllShortStoriesViewModel model = modelMapper.map(s, AllShortStoriesViewModel.class);
+            model.setUser(s.getUser().getUsername());
+            model.setRating(this.ratingService.getRatingByStory(s));
+            allStoriesForUSer.add(model);
+
+        });
+        return allStoriesForUSer;
+
+    };
 }
 

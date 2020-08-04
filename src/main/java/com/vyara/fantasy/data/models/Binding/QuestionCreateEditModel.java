@@ -13,12 +13,12 @@ import javax.validation.constraints.Size;
 public class QuestionCreateEditModel {
 
 
-    @NotNull
-    @Size(min=3, max=30)
+    @NotNull(message = "Field can not be empty")
+    @Size(min=5, max=100, message = "Please enter enter between 5 and 100 characters")
     private String title;
 
-    @NotNull
-    @Size(min=10, max=800)
+    @NotNull(message = "Field can not be empty")
+    @Size(min=30, max=800, message = "Please enter enter between 30 and 800 characters")
     private String content;
 
 

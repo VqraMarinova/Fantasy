@@ -16,4 +16,6 @@ public interface ShortStoryService {
     void editShortStory(ShortStoryCreateEditServiceModel map, Long id);
 
     void deleteShortStory(Long id);
+
+    List<AllShortStoriesViewModel> getAllStoriesForUser();
 }

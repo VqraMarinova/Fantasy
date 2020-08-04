@@ -80,5 +80,22 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     }
+
+    @Override
+    public List<AllQuestionsViewModel> getAllQuestionsForUser(){
+        List<AllQuestionsViewModel> allQuestionsForUser = new ArrayList<>();
+
+        this.questionRepository.getAllByUser(this.authenticatedUserService.getCurrentUser()).forEach(q->{
+            AllQuestionsViewModel model = modelMapper.map(q, AllQuestionsViewModel.class);
+            model.setPublishDate(q.getPublishDate().toString());
+            model.setUser(q.getUser().getUsername());
+            model.setAnswersCount(q.getAnswers().size());
+
+            allQuestionsForUser.add(model);
+
+        });
+        return allQuestionsForUser;
+
+    };
 }
 

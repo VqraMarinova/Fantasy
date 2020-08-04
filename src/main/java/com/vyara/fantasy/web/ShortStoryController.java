@@ -21,26 +21,30 @@ public class ShortStoryController {
     private final ModelMapper modelMapper;
     private final ShortStoryService shortStoryService;
 
+    @ModelAttribute("storyModel")
+    public ShortStoryCreateEditModel storyModel (){
+        return new ShortStoryCreateEditModel();
+    }
 
     @GetMapping("/add-story")
-    public String getAddShortStoryForm() {
+    public String getAddShortStoryForm(@ModelAttribute("storyModel") ShortStoryCreateEditModel storyModel) {
         return "addShortStory";
     }
 
     @PostMapping("/add-story")
-    public String AddShortStory(@Valid @ModelAttribute ShortStoryCreateEditModel shortStoryCreateEditModel, AbstractBindingResult bindingResult) throws Exception {
+    public String AddShortStory(@Valid @ModelAttribute("storyModel") ShortStoryCreateEditModel storyModel, AbstractBindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             return "addShortStory";
         }
-        shortStoryService.addNewShortStory(this.modelMapper.map(shortStoryCreateEditModel, ShortStoryCreateEditServiceModel.class));
+        shortStoryService.addNewShortStory(this.modelMapper.map(storyModel, ShortStoryCreateEditServiceModel.class));
         return "redirect:/home";
     }
 
     @PreAuthorize("hasAuthority('MODERATOR')")
     @PostMapping("/edit/story/{id}")
-    public String editShortStory(@Valid @ModelAttribute ShortStoryCreateEditModel shortStoryCreateEditModel, @PathVariable Long id ){
+    public String editShortStory(@Valid @ModelAttribute("storyModel") ShortStoryCreateEditModel storyModel, @PathVariable Long id ){
         this.shortStoryService.editShortStory(this.modelMapper.map(
-                shortStoryCreateEditModel, ShortStoryCreateEditServiceModel.class
+                storyModel, ShortStoryCreateEditServiceModel.class
         ), id);
         return String.format("redirect:/explore/story/%s",id);
     }
