@@ -3,6 +3,7 @@ package com.vyara.fantasy.repositories;
 import com.vyara.fantasy.data.entities.Book;
 import com.vyara.fantasy.data.entities.Movie;
 import com.vyara.fantasy.data.entities.ShortStory;
+import com.vyara.fantasy.data.entities.User;
 import com.vyara.fantasy.data.entities.secondary.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,5 +13,6 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
     List<Rating> findAllByBook(Book book);
     List<Rating> findAllByMovie(Movie movie);
     List<Rating> findAllByStory(ShortStory story);
+    List<Rating> findAllByUser(User user);
 
 }

@@ -1,4 +1,4 @@
-package com.vyara.fantasy.config;
+package com.vyara.fantasy.constants;
 
 public class Constants {
     public static final String BOOK_DEFAULT_IMAGE = "https://res.cloudinary.com/dvxdlf9hx/image/upload/v1595991629/kmjmkszbpprncgecdmmu.jpg";

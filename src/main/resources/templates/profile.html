@@ -6,16 +6,16 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
        >
 <th:block th:include="~{fragments/head}"/>
-<body>
+<body th:background="${backgroundImage}">
 <th:block th:include="~{fragments/header}"/>
 <main>
 
     <div class="container">
         <div class="text-center">
-            <h3 class="text-white">User Profile:</h3>
+            <h3 class="text-white" th:classappend ="${fontColor}">User Profile:</h3>
             <br>
-            <h4 class="text-white">Username: <span th:text="${session.username}"></span></h4>
-            <h4 class="text-white">Email: <span th:text="${session.email}"></span></h4>
+            <h4 class="text-white" th:classappend ="${fontColor}">Username: <span th:text="${session.username}"></span></h4>
+            <h4 class="text-white" th:classappend ="${fontColor}">Email: <span th:text="${session.email}"></span></h4>
             <br>
 
             <button data-toggle="collapse" data-target="#changePassword" class="btn btn-light mr-3">Change password</button>
@@ -26,13 +26,13 @@
                 <form class="mx-auto w-25" action="/changePassword" method="post" th:object="${passwordModel}">
                         <div class="form-group">
                             <div class="label-holder text-white d-flex justify-content-center">
-                                <label for="currentPassword" class="h3 mb-2">Current Password</label>
+                                <label for="currentPassword" class="h3 mb-2" th:classappend ="${fontColor}">Current Password</label>
                             </div>
                             <input type="password" class="form-control" id="currentPassword" name="currentPassword" th:field= "*{currentPassword}"/>
                         </div>
                         <div class="form-group">
                             <div class="label-holder text-white d-flex justify-content-center">
-                                <label for="password" class="h3 mb-2">New password</label>
+                                <label for="password" class="h3 mb-2" th:classappend ="${fontColor}">New password</label>
                             </div>
                             <input type="password" class="form-control" id="password" name="newPassword" th:field= "*{newPassword}"
                                    pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,25})" title="Should be between 5 and 25 characters and contain at least: one lower and one uppercase letter and one digit."/>
@@ -43,7 +43,7 @@
                         </div>
                         <div class="form-group">
                             <div class="label-holder text-white textCol d-flex justify-content-center">
-                                <label for="confirmPassword" class="h4 mb-2">Confirm Password</label>
+                                <label for="confirmPassword" class="h4 mb-2" th:classappend ="${fontColor}">Confirm Password</label>
                             </div>
                             <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" th:field= "*{confirmPassword}"
                                    pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,25})" title="Should be between 5 and 25 characters and contain at least: one lower and one uppercase letter and one digit. Should match password field"/>
@@ -61,13 +61,13 @@
                 <form class="mx-auto w-25" action="/changeEmail" method="post" th:object="${emailModel}">
                         <div class="form-group">
                             <div class="label-holder text-white d-flex justify-content-center">
-                                <label for="password" class="h3 mb-2">Your Password</label>
+                                <label for="password" class="h3 mb-2" th:classappend ="${fontColor}">Your Password</label>
                             </div>
                             <input type="password" class="form-control"  name="password" th:field= "*{password}"/>
                         </div>
                         <div class="form-group">
                             <div class="label-holder text-white d-flex justify-content-center">
-                                <label for="newEmail" class="h3 mb-2">New Email</label>
+                                <label for="newEmail" class="h3 mb-2" th:classappend ="${fontColor}">New Email</label>
                             </div>
                             <input type="email" class="form-control" id="newEmail" name="newEmail" th:field= "*{newEmail}"/>
                             <ul th:if="${#fields.hasErrors('newEmail')}">
@@ -76,7 +76,7 @@
                         </div>
                         <div class="form-group">
                             <div class="label-holder text-white textCol d-flex justify-content-center">
-                                <label for="confirmEmail" class="h4 mb-2">Confirm Email</label>
+                                <label for="confirmEmail" class="h4 mb-2" th:classappend ="${fontColor}">Confirm Email</label>
                             </div>
                             <input class="form-control" type="email" id="confirmEmail" name="confirmEmail" th:field= "*{confirmEmail}"/>
                             <span id='messageConfirmEmail'></span>

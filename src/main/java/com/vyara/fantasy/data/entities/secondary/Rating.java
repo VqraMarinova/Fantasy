@@ -3,15 +3,13 @@ package com.vyara.fantasy.data.entities.secondary;
 import com.vyara.fantasy.data.entities.Book;
 import com.vyara.fantasy.data.entities.Movie;
 import com.vyara.fantasy.data.entities.ShortStory;
+import com.vyara.fantasy.data.entities.User;
 import com.vyara.fantasy.data.entities.base.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -31,4 +29,7 @@ public class Rating extends BaseEntity {
 
     @ManyToOne
     private ShortStory story;
+
+    @ManyToOne(fetch= FetchType.EAGER)
+    private User user;
 }

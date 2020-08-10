@@ -38,7 +38,7 @@ public class MovieController {
             return "addMovie";
         }
         movieService.addNewMovie(this.modelMapper.map(movieModel, MovieCreateEditServiceModel.class));
-        return "redirect:/home";
+        return "redirect:/explore/movies";
     }
 
 

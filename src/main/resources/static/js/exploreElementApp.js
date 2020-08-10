@@ -8,6 +8,8 @@ import * as render from './RenderElement.js'
 window.addEventListener('load', async function () {
     const targetDiv = document.getElementById('exploreItems');
 
+    targetDiv.innerHTML = '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">Loading...</div></div>';
+
     await renderItem();
 
    async function renderItem() {
@@ -23,8 +25,7 @@ window.addEventListener('load', async function () {
         }
         targetDiv.innerHTML = result;
 
-
-    };
+    }
 
 
     targetDiv.addEventListener('click', async (e)=>{

@@ -22,5 +22,6 @@ public class MovieViewModel {
     private String description;
     private List<CommentViewModel> comments;
     private String rating;
+    private Boolean canVote;
 
 }

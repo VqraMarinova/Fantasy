@@ -5,28 +5,28 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <th:block th:include="~{fragments/head}"/>
-<body>
+<body th:background="${backgroundImage}">
 <th:block th:include="~{fragments/header}"/>
 <main>
     <div class="container">
-    <h1 class="text-center text-white">Login</h1>
+    <h1 class="text-center text-white" th:classappend ="${fontColor}">Login</h1>
     <hr class="hr-3"/>
     <form class="mx-auto w-25" action="login" method="post">
         <div class="form-group">
             <div class="label-holder text-white d-flex justify-content-center">
-                <label for="username" class="h3 mb-2">Username</label>
+                <label for="username" class="h3 mb-2" th:classappend ="${fontColor}">Username</label>
 
             </div>
             <input type="text" class="form-control" id="username" name="username"/>
         </div>
         <div class="form-group">
             <div class="label-holder text-white d-flex justify-content-center">
-                <label for="password" class="h3 mb-2">Password</label>
+                <label for="password" class="h3 mb-2" th:classappend ="${fontColor}">Password</label>
             </div>
             <input type="password" class="form-control" id="password" name="password"/>
         </div>
         <div class="button-holder d-flex justify-content-center">
-            <label for="remember" class="p text-white">Remember me:&nbsp;&nbsp;</label>
+            <label for="remember" class="p text-white" th:classappend ="${fontColor}">Remember me:&nbsp;&nbsp;</label>
             <input name='remember' type='checkbox' id="remember"/>
         </div>
 

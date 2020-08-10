@@ -6,17 +6,17 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <th:block th:include="~{fragments/head}"/>
-<body>
+<body th:background="${backgroundImage}">
 <th:block th:include="~{fragments/header}"/>
 <main>
     <div>
         <div class="container">
-    <h1 class="text-center text-white">Share yor short story</h1>
+    <h1 class="text-center text-white" th:classappend ="${fontColor}">Share yor short story</h1>
     <hr class="hr-3"/>
     <form class="mx-auto w-50" method="post" th:action="@{/add-story}" th:object="${storyModel}">
         <div class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
-                <label for="title" class="h4 mb-2 text-white">Title</label>
+                <label for="title" class="h4 mb-2 text-white" th:classappend ="${fontColor}">Title</label>
             </div>
             <input type="text" class="form-control" id="title" name="title" th:field="*{title}"  maxlength = "100"  minlength = "5" required/>
             <ul th:if="${#fields.hasErrors('title')}">
@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="summary" class="h4 mb-2">Summary</label>
+                <label for="summary" class="h4 mb-2" th:classappend ="${fontColor}">Summary</label>
             </div>
             <textarea type="text" class="form-control" rows="3" id="summary" name="summary" th:field="*{summary}"  maxlength = "600"  minlength = "30" required></textarea>
             <ul th:if="${#fields.hasErrors('summary')}">
@@ -34,7 +34,7 @@
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="content" class="h4 mb-2">Content</label>
+                <label for="content" class="h4 mb-2" th:classappend ="${fontColor}">Content</label>
             </div>
             <textarea type="text" class="form-control" rows="15"  id="content" name="content" th:field="*{content}"  maxlength = "7000"  minlength = "400" required></textarea>
             <ul th:if="${#fields.hasErrors('content')}">

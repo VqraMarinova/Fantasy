@@ -1,6 +1,6 @@
 package com.vyara.fantasy.web;
 
-import com.vyara.fantasy.config.Constants;
+import com.vyara.fantasy.constants.Constants;
 import com.vyara.fantasy.data.models.Binding.BookCreateEditModel;
 import com.vyara.fantasy.data.models.service.BookCreateEditServiceModel;
 import com.vyara.fantasy.services.BookService;
@@ -49,7 +49,7 @@ public class BookController {
         }
 
         bookService.addNewBook(book);
-        return "redirect:/home";
+        return "redirect:/explore/books";
     };
 
     @PreAuthorize("hasAuthority('MODERATOR')")

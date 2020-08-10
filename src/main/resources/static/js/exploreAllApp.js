@@ -4,6 +4,9 @@ const items = (window.location.pathname.toString().split('/'))[2];
 window.addEventListener('load', async function () {
 
     const targetDiv = document.getElementById('exploreItems');
+
+    targetDiv.innerHTML = '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">Loading...</div></div>';
+
     await renderItems();
 
     async function renderItems() {
@@ -25,14 +28,17 @@ window.addEventListener('load', async function () {
 
     async function renderMovies() {
         const movies = await (await fetch('/api/explore/movies')).json();
+        if (movies.length === 0){
+            return '<div class="container"> <div class="mx-auto w-100 text-center text-white bg-text">There are no movies to show</div></div>';
+        }
         let result = `<div class='row mb-4 d-flex justify-content-around'>`;
 
         movies.forEach(movie => {
             result += '<div class="col-md-4 d-flex flex-column bg-text mb-3">';
             result += `<a href="/explore/movie/${movie.id}">`
-            result += `<p class="text-muted">Title: <u><span class="h4 text-white">${movie.title}</span></u> </p> 
-           <p class="text-muted">Rating: <span class="p text-white">${movie.rating} / 5</span> </p> 
-             <p class="text-muted">Cast: <span class="p text-white">${movie.cast}</span> </p>`
+            result += `<p class="text-info">Title: <u><span class="h4 text-white">${movie.title}</span></u> </p> 
+           <p class="text-info">Rating: <span class="p text-white">${movie.rating} / 5</span> </p> 
+             <p class="text-info">Cast: <span class="p text-white">${movie.cast}</span> </p>`
             result += '</a></div>';
         });
         result += '</div>';
@@ -42,14 +48,17 @@ window.addEventListener('load', async function () {
 
     async function renderStories() {
         const stories = await (await fetch('/api/explore/stories')).json();
+        if (stories.length === 0){
+            return '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">There are no stories to show</div></div>';
+        }
         let result = `<div class='row mb-4 d-flex justify-content-around'>`;
 
         stories.forEach(story => {
             result += '<div class="col-md-4 d-flex flex-column bg-text mb-3">';
             result += `<a href="/explore/story/${story.id}">`
-            result += `<p class="text-muted">Title: <u><span class="h4 text-white">${story.title}</span></u> </p> 
-           <p class="text-muted">Rating: <span class="p text-white">${story.rating} / 5</span> </p> 
-             <p class="text-muted">Author: <span class="p text-white">${story.user}</span> </p>`
+            result += `<p class="text-info">Title: <u><span class="h4 text-white">${story.title}</span></u> </p> 
+           <p class="text-info">Rating: <span class="p text-white">${story.rating} / 5</span> </p> 
+             <p class="text-info">Author: <span class="p text-white">${story.user}</span> </p>`
             result += '</a></div>';
         });
         result += '</div>';
@@ -59,6 +68,9 @@ window.addEventListener('load', async function () {
 
     async function renderQuestions() {
         const questions = await (await fetch('/api/explore/questions')).json();
+        if (questions.length === 0){
+            return '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">There are no questions to show</div></div>';
+        }
         let result = `
   <table class="table table-bordered bg-text justify-content-around" id="table" >
   <thead>
@@ -88,13 +100,13 @@ window.addEventListener('load', async function () {
 
     async function renderQuotes() {
         const quotes = await (await fetch('/api/explore/quotes')).json();
-        let result = `  <br><div class='class="text-center"'>`;
+        let result = `  <br><div class="page-text">`;
 
         quotes.forEach(quote => {
-            result += `<div class="text-white>
-          <div class="blockquote text-right ">
-  <p class="mb-0 text-white"><em>&#65282;<span>${quote.content}</span>&#65282;</em></p>
-  <p class="blockquote-footer text-info">${quote.author}</p>
+            result += ` <div class="text-center text-white">
+            <div class="text-left"><br>
+  <p class="h6"><em>&#65282;<span class="\${fontColor}">${quote.content}</span>&#65282;</em></p>
+  <p class="p text-info">${quote.author}</p>
   <div sec:authorize="hasAuthority('MODERATOR')" class="text-white">
   <button type="button" class="btn btn-outline-danger btn-sm editQuoteButtons" id="editQuote" value="${quote.id}" >Edit</button>
       <form action='/delete/quote/${quote.id}' method="post">
@@ -116,9 +128,9 @@ window.addEventListener('load', async function () {
         books.forEach(book => {
             result += '<div class="col-md-4 d-flex flex-column bg-text mb-3">';
             result += `<a href="/explore/book/${book.id}">`
-            result += `<p class="text-muted">Title: <u><span class="h4 text-white">${book.title}</span></u> </p> 
-            <p class="text-muted">Rating: <span class="p text-white">${book.rating} / 5</span> </p> 
-            <p class="text-muted">Author: <span class="p text-white">${book.author}</span> </p>`
+            result += `<p class="text-info">Title: <u><span class="h4 text-white">${book.title}</span></u> </p> 
+            <p class="text-info">Rating: <span class="p text-white">${book.rating} / 5</span> </p> 
+            <p class="text-info">Author: <span class="p text-white">${book.author}</span> </p>`
             result += '</a></div>';
         });
         result += '</div>';

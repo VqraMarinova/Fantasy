@@ -10,5 +10,8 @@ public interface AuthenticatedUserService {
     String getUsername();
 
     List<String> getRoles();
+
+
+    void loginAfterRegister(User user);
 }
 

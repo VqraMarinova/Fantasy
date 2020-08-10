@@ -7,23 +7,24 @@
         >
 <th:block th:include="~{fragments/head}"/>
 
-<body>
+<body th:background="${backgroundImage}">
 <th:block th:include="~{fragments/header}"/>
 <main>
     <div class="container text-center text-white">
-        <p class="h3 text-white" th:text="${session.greeting}+ ${session.username}"></p><br>
+        <p class="h3 text-white" th:classappend ="${fontColor}" th:text="${session.greeting}+ ${session.username}"></p><br>
         <div class="text-white text-center">
-            <p class="h4 text-white">Enjoy your time, reading, sharing and discussing our favorite genre- Fantasy!</p>
+            <p class="h4 text-white" th:classappend ="${fontColor}">We are all about fantasy &#x2764;</p>
+            <p class="h4 text-white" th:classappend ="${fontColor}">Please, read, share and discuss!</p>
         </div><br><br>
 
         <th:block th:if="${questionsForUserCount == 0}">
             <div class="text-white text-center">
-                <p class="h4 text-white">You have not published any questions yet! Don't be shy and start a discussion <a href="/add-question">HERE</a> </p>
+                <p class="h4 text-white" th:classappend ="${fontColor}">You have not published any questions yet! Don't be shy and start a discussion <a href="/add-question">HERE</a> </p>
             </div><br>
         </th:block>
         <th:block th:unless="${questionsForUserCount == 0}">
             <br> <div class="text-white text-center">
-                <p class="h6 text-white">Questions you have asked:</p>
+                <p class="h6 text-white" th:classappend ="${fontColor}">Your Questions:</p>
 
                 <table class="table table-bordered bg-text justify-content-around" id="table" >
                     <thead>
@@ -35,7 +36,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="question : ${questionsForUser}">
-                        <td><a th:href="@{'/explore/question/' + ${question.getId()}}" th:text="${question.getTitle()}"></td>
+                        <td><a th:href="@{'/explore/question/' + ${question.getId()}}" th:text="${question.getTitle()}"></a></td>
                         <td th:text="${question.getPublishDate()}"></td>
                         <td th:text="${question.getAnswersCount()}"></td>
 
@@ -47,22 +48,27 @@
         </th:block>
         <th:block th:if="${storiesForUserCount == 0}">
             <div class="text-white text-center">
-                <p class="h4 text-white">You have not published any stories yet! Show the world what a great author you are <a href="/add-story">HERE</a> </p>
+                <p class="h4 text-white" th:classappend ="${fontColor}">You have not published any stories yet! Show the world what a great author you are <a href="/add-story">HERE</a> </p>
             </div><br>
         </th:block>
         <th:block th:unless="${storiesForUserCount == 0}">
             <br><div class="text-white text-center">
-                <p class="h6 text-white">Stories you have published:</p>
+                <p class="h6 text-white" th:classappend ="${fontColor}">Your Stories</p>
+            <table class="table table-bordered bg-text justify-content-around" id="table" >
+                <thead>
+                <tr>
+                    <th scope="col">Title:</th>
+                    <th scope="col">Rating</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="story : ${storiesForUser}">
+                    <td><a th:href="@{'/explore/story/' + ${story.getId()}}" th:text="${story.getTitle()}"></a></td>
+                    <td th:text="${story.getRating()}"></td>
+                </tr>
 
-                <div class='row mb-4 d-flex justify-content-around' th:each="story : ${storiesForUser}">
-
-                   <div class="col-md-4 d-flex flex-column bg-text mb-3">
-                        <a th:href="@{'/explore/story/' + ${story.getId()}}">
-                            <p class="text-muted">Title: <u><span class="h4 text-white" th:text="${story.getTitle()}"></span></u> </p>
-                            <p class="text-muted">Rating: <span class="p text-white" th:text="${story.getRating()}"> / 5</span> </p>
-                            </a></div>
-
-                    </div>
+                </tbody>
+            </table>
 
 
             </div><br>

@@ -21,5 +21,7 @@ public class BookViewModel {
     private String author;
     private List<CommentViewModel> comments;
     private String rating;
+    private Boolean canVote;
+
 
 }

@@ -2,6 +2,7 @@ package com.vyara.fantasy.data.entities;
 
 import com.vyara.fantasy.data.entities.base.BaseEntity;
 import com.vyara.fantasy.data.entities.secondary.Comment;
+import com.vyara.fantasy.data.entities.secondary.Rating;
 import com.vyara.fantasy.data.entities.secondary.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +24,6 @@ public class User extends BaseEntity implements UserDetails {
     private String username;
 
     @Column
-    private String fullName;
-
-    @Column
     private String email;
 
     @Column
@@ -33,6 +31,9 @@ public class User extends BaseEntity implements UserDetails {
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    private List<Rating> ratings;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<Question> questions;

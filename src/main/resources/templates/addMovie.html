@@ -6,17 +6,17 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <th:block th:include="~{fragments/head}"/>
-<body>
+<body th:background="${backgroundImage}">
 <th:block th:include="~{fragments/header}"/>
 <main>
     <div>
         <div class="container">
-    <h1 class="text-center text-white">Add new movie</h1>
+    <h1 class="text-center text-white" th:classappend ="${fontColor}">Add new movie</h1>
     <hr class="hr-3"/>
     <form class="mx-auto w-50"  method="post" th:action="@{/add-movie}" th:object="${movieModel}">
         <div class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
-                <label for="title" class="h4 mb-2 text-white">Title</label>
+                <label for="title" class="h4 mb-2 text-white" th:classappend ="${fontColor}">Title</label>
             </div>
             <input type="text" class="form-control" id="title" name="title" th:field="*{title}" maxlength = "100"  minlength = "5" required/>
             <ul th:if="${#fields.hasErrors('title')}">
@@ -26,7 +26,7 @@
         </div>
         <div class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
-                <label for="trailerLink" class="h5 mb-2 text-white">Video Trailer Link (Optional, Youtube links only)</label>
+                <label for="trailerLink" class="h5 mb-2 text-white" th:classappend ="${fontColor}">Video Trailer Link (Optional, Youtube links only)</label>
             </div>
             <input type="text" class="form-control" id="trailerLink" name="trailerLink" th:field="*{trailerLink}" placeholder="https://www.youtube.com/..."/>
             <ul th:if="${#fields.hasErrors('trailerLink')}">
@@ -35,7 +35,7 @@
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="description" class="h4 mb-2">Description</label>
+                <label for="description" class="h4 mb-2" th:classappend ="${fontColor}">Description</label>
             </div>
             <textarea type="text" class="form-control" rows="3" id="description" name="description" th:field="*{description}" maxlength = "600"  minlength = "30" required></textarea>
             <ul th:if="${#fields.hasErrors('description')}">
@@ -44,7 +44,7 @@
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="director" class="h4 mb-2">Director</label>
+                <label for="director" class="h4 mb-2" th:classappend ="${fontColor}">Director</label>
             </div>
             <input type="text" class="form-control" id="director" name="director" th:field="*{director}" maxlength = "100"  minlength = "5" required/>
             <ul th:if="${#fields.hasErrors('director')}">
@@ -53,7 +53,7 @@
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="cast" class="h4 mb-2">Cast</label>
+                <label for="cast" class="h4 mb-2" th:classappend ="${fontColor}">Cast</label>
             </div>
             <input type="text" class="form-control" id="cast" name="cast" th:field="*{cast}" maxlength = "250"  minlength = "5" required/>
             <ul th:if="${#fields.hasErrors('cast')}">
@@ -62,7 +62,7 @@
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="releaseDate"  class="h4 mb-2">Release Date</label>
+                <label for="releaseDate"  class="h4 mb-2" th:classappend ="${fontColor}">Release Date</label>
             </div>
             <input type="date" class="form-control" id="releaseDate" name="releaseDate" th:field="*{releaseDate}" required/>
             <ul th:if="${#fields.hasErrors('releaseDate')}">

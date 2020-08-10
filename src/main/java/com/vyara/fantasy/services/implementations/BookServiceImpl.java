@@ -1,10 +1,11 @@
 package com.vyara.fantasy.services.implementations;
 
-import com.vyara.fantasy.errors.EntityAlreadyExistsException;
 import com.vyara.fantasy.data.entities.Book;
+import com.vyara.fantasy.data.entities.secondary.Rating;
 import com.vyara.fantasy.data.models.ViewModels.AllBooksViewModel;
 import com.vyara.fantasy.data.models.ViewModels.BookViewModel;
 import com.vyara.fantasy.data.models.service.BookCreateEditServiceModel;
+import com.vyara.fantasy.errors.EntityAlreadyExistsException;
 import com.vyara.fantasy.repositories.BookRepository;
 import com.vyara.fantasy.services.BookService;
 import com.vyara.fantasy.services.CommentService;
@@ -27,6 +28,7 @@ public class BookServiceImpl implements BookService {
     private final RatingService ratingService;
     private final CommentService commentService;
     private final EntityValidator entityValidator;
+
 
 
 
@@ -66,6 +68,15 @@ public class BookServiceImpl implements BookService {
         model.setComments(this.commentService.getCommentByBook(book));
         model.setReleaseDate(book.getReleaseDate().toString());
 
+        List<Rating> ratings = this.ratingService.getRatingsForCurrentUser();
+        model.setCanVote(true);
+
+
+        ratings.forEach(rating -> {
+            if (rating.getBook() == book){
+                model.setCanVote(false);
+            }
+        });
 
         return model;
     }

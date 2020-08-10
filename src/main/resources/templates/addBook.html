@@ -6,17 +6,17 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <th:block th:include="~{fragments/head}"/>
-<body>
+<body th:background="${backgroundImage}">
 <th:block th:include="~{fragments/header}"/>
 <main>
     <div>
         <div class="container">
-    <h1 class="text-center text-white">Add new book</h1>
+    <h1 class="text-center text-white" th:classappend ="${fontColor}">Add new book</h1>
     <hr class="hr-3"/>
     <form class="mx-auto w-50" th:action="@{/add-book}" method="post" th:object="${bookModel}" enctype="multipart/form-data">
         <div class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
-                <label for="title" class="h4 mb-2 text-white">Title</label>
+                <label for="title" class="h4 mb-2 text-white" th:classappend ="${fontColor}">Title</label>
             </div>
 
             <input type="text" class="form-control" id="title" name="title" th:field="*{title}" maxlength = "100"  minlength = "5" required/>
@@ -26,7 +26,7 @@
         </div><br>
         <div class="form-group text-center">
             <br>
-                <label for="image" class="h6 mb-2 text-white">Upload Book, book cover or other related image(Optional, PNG or JPG only, max 10 MB):</label>
+                <label for="image" class="h6 mb-2 text-white" th:classappend ="${fontColor}">Upload Book, book cover or other related image(Optional, PNG or JPG only, max 10 MB):</label>
             <div class="textCol d-flex justify-content-center">
             <input type="file"  id="image" name="image" th:field="*{image}"/>
                 <ul th:if="${#fields.hasErrors('image')}">
@@ -36,7 +36,7 @@
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="description" class="h4 mb-2">Description</label>
+                <label for="description" class="h4 mb-2" th:classappend ="${fontColor}">Description</label>
             </div>
             <textarea type="text" th:field="*{description}" class="form-control" rows="3" id="description" name="description" maxlength = "600"  minlength = "30" required></textarea>
             <ul th:if="${#fields.hasErrors('description')}">
@@ -45,7 +45,7 @@
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="author" class="h4 mb-2">Author name</label>
+                <label for="author" class="h4 mb-2" th:classappend ="${fontColor}">Author name</label>
             </div>
             <input type="text" th:field="*{author}" class="form-control" id="author" name="author" maxlength = "100"  minlength = "5" required/>
             <ul th:if="${#fields.hasErrors('author')}">
@@ -54,7 +54,7 @@
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="releaseDate" class="h4 mb-2">Release Date</label>
+                <label for="releaseDate" class="h4 mb-2" th:classappend ="${fontColor}">Release Date</label>
             </div>
             <input type="date" th:field="*{releaseDate}" class="form-control" id="releaseDate" name="releaseDate" required/>
             <ul th:if="${#fields.hasErrors('releaseDate')}">

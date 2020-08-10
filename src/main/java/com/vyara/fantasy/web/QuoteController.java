@@ -37,7 +37,7 @@ public class QuoteController {
             return "addQuote";
         }
         quoteService.addNewQuote(this.modelMapper.map(quoteModel, QuoteCreateEditServiceModel.class));
-        return "redirect:/home";
+        return "redirect:/explore/quotes";
     }
 
     @PreAuthorize("hasAuthority('MODERATOR')")

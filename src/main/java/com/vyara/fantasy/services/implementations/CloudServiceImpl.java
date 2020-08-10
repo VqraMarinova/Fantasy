@@ -1,6 +1,6 @@
 package com.vyara.fantasy.services.implementations;
 
-import com.cloudinary.*;
+import com.cloudinary.Cloudinary;
 import com.vyara.fantasy.services.CloudService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +24,5 @@ public class CloudServiceImpl implements CloudService {
         multipartFile.transferTo(file);
         return cloudinary.uploader().upload(file,new HashMap()).get("url").toString();
     }
-
-
 
 }

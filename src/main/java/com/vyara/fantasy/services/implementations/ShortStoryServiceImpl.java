@@ -1,6 +1,7 @@
 package com.vyara.fantasy.services.implementations;
 
 import com.vyara.fantasy.data.entities.ShortStory;
+import com.vyara.fantasy.data.entities.secondary.Rating;
 import com.vyara.fantasy.data.models.ViewModels.AllShortStoriesViewModel;
 import com.vyara.fantasy.data.models.ViewModels.ShortStoryViewModel;
 import com.vyara.fantasy.data.models.service.ShortStoryCreateEditServiceModel;
@@ -36,8 +37,6 @@ public class ShortStoryServiceImpl implements ShortStoryService {
     @Override
     public void addNewShortStory(ShortStoryCreateEditServiceModel shortStoryCreateEditServiceModel) {
 
-        //TODO
-        //To check if book already exists
 
         ShortStory shortStory = this.modelMapper.map(shortStoryCreateEditServiceModel, ShortStory.class);
         shortStory.setAddedOn(LocalDate.now());
@@ -71,6 +70,18 @@ public class ShortStoryServiceImpl implements ShortStoryService {
         model.setAddedOn(story.getAddedOn().toString());
         model.setUser(story.getUser().getUsername());
 
+
+        List<Rating> ratings = this.ratingService.getRatingsForCurrentUser();
+        model.setCanVote(true);
+
+
+        ratings.forEach(rating -> {
+
+            if(rating.getStory() == story){
+                model.setCanVote(false);
+            }
+
+        });
 
 
         return model;

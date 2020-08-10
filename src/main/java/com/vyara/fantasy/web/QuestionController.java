@@ -38,7 +38,7 @@ public class QuestionController {
             return "addQuestion";
         }
         questionService.addNewQuestion(this.modelMapper.map(questionModel, QuestionCreateEditServiceModel.class));
-        return "redirect:/home";
+        return "redirect:/explore/questions";
     }
 
     @PreAuthorize("hasAuthority('MODERATOR')")

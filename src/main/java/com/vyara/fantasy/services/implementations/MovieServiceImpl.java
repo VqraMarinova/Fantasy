@@ -1,7 +1,8 @@
 package com.vyara.fantasy.services.implementations;
 
-import com.vyara.fantasy.config.Constants;
+import com.vyara.fantasy.constants.Constants;
 import com.vyara.fantasy.data.entities.Movie;
+import com.vyara.fantasy.data.entities.secondary.Rating;
 import com.vyara.fantasy.data.models.ViewModels.AllMoviesViewModel;
 import com.vyara.fantasy.data.models.ViewModels.MovieViewModel;
 import com.vyara.fantasy.data.models.service.MovieCreateEditServiceModel;
@@ -65,6 +66,21 @@ public class MovieServiceImpl implements MovieService {
         model.setRating(this.ratingService.getRatingByMovie(movie));
         model.setComments(this.commentService.getCommentByMovie(movie));
         model.setReleaseDate(movie.getReleaseDate().toString());
+
+        List<Rating> ratings = this.ratingService.getRatingsForCurrentUser();
+        model.setCanVote(true);
+
+
+       ratings.forEach(rating -> {
+
+           if(rating.getMovie() == movie){
+               model.setCanVote(false);
+           }
+
+        });
+
+
+
 
         return model;
     }

@@ -1,13 +1,11 @@
 body {
-     background-image: url('/img/book-2152349_1920.jpg');
      background-position: center center;
      background-repeat: no-repeat;
      background-attachment: fixed;
      background-size: cover;
      background-color: #464646;
-
 }
-
+/*
 body:after {
      content:'';
      display: block;
@@ -20,6 +18,10 @@ body:after {
      z-index: -1;
 }
 
+ */
+
+
+
 .bg-text {
      background-color: rgb(0,0,0); /* Fallback color */
      background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
@@ -31,6 +33,23 @@ body:after {
      padding: 20px;
      text-align: center;
 }
+.dayText {
+     color: black !important;
+
+}
+
+.page-text {
+     background-color: rgb(0,0,0); /* Fallback color */
+     background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
+     color: white;
+     font-weight: normal;
+     border: 1px solid #f1f1f1;
+     text-align: center;
+}
+
+
+
+
 
 
 footer {

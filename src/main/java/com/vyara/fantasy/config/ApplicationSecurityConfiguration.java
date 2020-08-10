@@ -35,7 +35,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .authorizeRequests()
                 .antMatchers("/")
                 .permitAll()
-                .antMatchers("/favicon.ico", "/js/*", "/css/*", "/img/*")
+                .antMatchers("/favicon.png", "/js/*", "/css/*", "/img/*")
                 .permitAll()
                 .antMatchers("/api/check-users-validity")
                 .permitAll()

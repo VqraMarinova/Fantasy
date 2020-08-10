@@ -5,17 +5,17 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <th:block th:include="~{fragments/head}"/>
-<body>
+<body th:background="${backgroundImage}">
 <th:block th:include="~{fragments/header}"/>
 <main>
     <div>
         <div class="container">
-    <h1 class="text-center text-white">Register</h1>
+    <h1 class="text-center text-white" th:classappend ="${fontColor}">Register</h1>
     <hr class="hr-3"/>
     <form class="mx-auto w-25" action="/register" method="post" th:object="${model}">
         <div class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
-                <label for="username" class="h4 mb-2 text-white">Username</label>
+                <label for="username" class="h4 mb-2 text-white" th:classappend ="${fontColor}">Username</label>
             </div>
             <input type="text" class="form-control" th:field= "*{username}" id="username" name="username"
                    pattern="^[a-zA-Z0-9._-]{3,15}$" title="Username should have between 3 and 15 characters. Valid characters: a-z, A-Z, 0-9, points, dashes and underscores"/>
@@ -25,18 +25,8 @@
             <span id='messageUsername'></span>
         </div>
         <div class="form-group">
-            <div class="label-holder textCol d-flex justify-content-center">
-                <label for="username" class="h4 mb-2 text-white">Full Name</label>
-            </div>
-            <input type="text" class="form-control" id="fullName" th:field= "*{fullName}" name="fullName"
-                   pattern="^[A-Za-z\\s]+$" title="Full name should have only letters and space"/>
-            <ul th:if="${#fields.hasErrors('fullName')}">
-                <li th:each="error :  ${#fields.errors('fullName')}" th:text="${error}" class="text-danger"></li>
-            </ul>
-        </div>
-        <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="email" class="h4 mb-2">Email</label>
+                <label for="email" class="h4 mb-2" th:classappend ="${fontColor}">Email</label>
             </div>
             <input type="email" class="form-control" id="email" th:field= "*{email}" name="email"/>
             <ul th:if="${#fields.hasErrors('email')}">
@@ -46,7 +36,7 @@
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="password" class="h4 mb-2">Password</label>
+                <label for="password" class="h4 mb-2" th:classappend ="${fontColor}">Password</label>
             </div>
             <input type="password" class="form-control" id="password" th:field= "*{password}" name="password"
                    pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,25})" title="Should be between 5 and 25 characters and contain at least: one lower and one uppercase letter and one digit."/>
@@ -56,7 +46,7 @@
         </div>
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="confirmPassword" class="h4 mb-2">Confirm Password</label>
+                <label for="confirmPassword" class="h4 mb-2" th:classappend ="${fontColor}">Confirm Password</label>
             </div>
             <input class="form-control" type="password" id="confirmPassword" th:field= "*{confirmPassword}" name="confirmPassword"
                    pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,25})" title="Should be between 5 and 25 characters and contain at least: one lower and one uppercase letter and one digit. Should match password field"/>/>

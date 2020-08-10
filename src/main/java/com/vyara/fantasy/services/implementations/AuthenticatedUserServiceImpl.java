@@ -3,6 +3,7 @@ package com.vyara.fantasy.services.implementations;
 import com.vyara.fantasy.data.entities.User;
 import com.vyara.fantasy.repositories.UserRepository;
 import com.vyara.fantasy.services.AuthenticatedUserService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +22,7 @@ public class AuthenticatedUserServiceImpl implements AuthenticatedUserService {
 
 
     @Override
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         return this.userRepository.getByUsername(getUsername());
     }
 
@@ -39,4 +40,12 @@ public class AuthenticatedUserServiceImpl implements AuthenticatedUserService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void loginAfterRegister(User user){
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
 }

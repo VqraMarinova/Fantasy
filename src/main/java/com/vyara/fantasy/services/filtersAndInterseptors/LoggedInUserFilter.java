@@ -1,4 +1,4 @@
-package com.vyara.fantasy.services.filters;
+package com.vyara.fantasy.services.filtersAndInterseptors;
 
 
 import com.vyara.fantasy.services.AuthenticatedUserService;

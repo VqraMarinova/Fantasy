@@ -1,4 +1,4 @@
-package com.vyara.fantasy.services.filters;
+package com.vyara.fantasy.services.filtersAndInterseptors;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;

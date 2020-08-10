@@ -17,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
@@ -47,6 +48,9 @@ public class UserServiceImpl implements UserService {
         user.setPassword(hashingService.hashPass(model.getPassword()));
         setRoles(user);
         userRepository.save(user);
+        ServletRequestAttributes attributes;
+
+        this.authenticatedUserService.loginAfterRegister(user);
     }
 
 
@@ -54,6 +58,7 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return this.userRepository.getByUsername(s);
     }
+
 
     private void setRoles(User user) {
         if (this.userRepository.count() == 0) {
@@ -103,10 +108,7 @@ public class UserServiceImpl implements UserService {
             models.add(model);
 
         });
-
-
         return models;
     };
-
 
 }

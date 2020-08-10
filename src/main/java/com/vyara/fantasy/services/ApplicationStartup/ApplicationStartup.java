@@ -1,4 +1,4 @@
-package com.vyara.fantasy.web.ApplicationStartup;
+package com.vyara.fantasy.services.ApplicationStartup;
 
 import com.vyara.fantasy.data.models.service.QuoteCreateEditServiceModel;
 import com.vyara.fantasy.data.models.service.UserRegisterServiceModel;
@@ -9,9 +9,11 @@ import lombok.SneakyThrows;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @AllArgsConstructor
+@Transactional
 public class ApplicationStartup
         implements ApplicationListener<ApplicationReadyEvent> {
 
@@ -38,10 +40,12 @@ public class ApplicationStartup
           this.quoteService.addNewQuote(q2);
           this.quoteService.addNewQuote(q3);
           this.quoteService.addNewQuote(q4);
+
+          this.quoteService.chooseUpQuoteOfTheHour();
       }
 
       if (this.userService.getCheckUsers().size() == 0){
-          UserRegisterServiceModel user = new UserRegisterServiceModel("vvv", "vvv", "vvv@.vvv.com", "vvv", "vvv");
+          UserRegisterServiceModel user = new UserRegisterServiceModel("vvv", "vvv@.vvv.com", "vvv", "vvv");
           this.userService.register(user);
       }
 

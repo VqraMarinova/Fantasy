@@ -28,7 +28,6 @@ public class MovieCreateEditModel {
     private String description;
 
     @NotNull(message = "Field can not be empty")
-    @Pattern(regexp = "^[A-Za-z\\s]+$", message = "Director name should have only letters and space")
     @Size(min=5, max=100, message = "Please enter enter between 5 and 100 characters")
     private String director;
 

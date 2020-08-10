@@ -17,10 +17,6 @@ public class UserRegisterModel {
     private String username;
 
     @NotNull(message = "Field can not be empty")
-    @Pattern(regexp = "^[A-Za-z\\s]+$", message = "Full name should have only letters and space")
-    private String fullName;
-
-    @NotNull(message = "Field can not be empty")
     @Pattern(regexp = "^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$", message = "Please enter valid email")
     private String email;
 

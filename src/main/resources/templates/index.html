@@ -6,24 +6,24 @@
 
 >
 <th:block th:include="~{fragments/head}"/>
-<body>
+<body th:background="${backgroundImage}">
 <th:block th:include="~{fragments/header}"/>
 <main>
     <div class="container" id="index">
         <div class="text-center text-white">
-            <div class="text-center border border-white"><br>
-                <p class="h3 text-white"><em>&#65282;<span th:text="${quoteOfTheDay.getContent()}"></span>&#65282;</em></p>
-                <p class="h4 blockquote-footer text-info"><span th:text="${quoteOfTheDay.getAuthor()}"></span></p>
+            <div class="text-center page-text"><br>
+                <p class="h3"><em>&#65282;<span th:text="${quoteOfTheDay.getContent()}"></span>&#65282;</em></p>
+                <p class="h5 text-info"><span th:text="${quoteOfTheDay.getAuthor()}"></span></p>
                 <br></div><br><br></div>
         <div>
             <div class="text-white text-center">
-                <p class="h6 white text">We are a small community, keen on fantasy</p>
-                <p class="h6 white text">Here you can explore and share information regarding fantasy books and movies.</p>
-                <p class="h6 white text">You can comment and rate, </p>
-                <p class="h6 white text">you can publish your oun fantasy story, share your favorite smart quotes, </p>
-                <p class="h6 white text">ask a question, start a discussion, </p>
-                <p class="h6 white text">or answer other's questions.</p>
-                <p class="h6 text-white"> <a href="/login">LOGIN</a> or  <a href="/register">REGISTER</a> now!</p>
+                <p class="h6 white text" th:classappend ="${fontColor}">We are a small community, keen on fantasy</p>
+                <p class="h6 white text" th:classappend ="${fontColor}">Here you can explore and share information regarding fantasy books and movies.</p>
+                <p class="h6 white text" th:classappend ="${fontColor}">You can comment and rate, </p>
+                <p class="h6 white text" th:classappend ="${fontColor}">you can publish your oun fantasy story, share your favorite smart quotes, </p>
+                <p class="h6 white text" th:classappend ="${fontColor}">ask a question, start a discussion, </p>
+                <p class="h6 white text" th:classappend ="${fontColor}">or answer other's questions.</p>
+                <p class="h6 text-white" th:classappend ="${fontColor}"> <a href="/login">LOGIN</a> or  <a href="/register">REGISTER</a> now!</p>
             </div>
         </div>
     </div>

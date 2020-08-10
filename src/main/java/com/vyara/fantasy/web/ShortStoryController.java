@@ -37,7 +37,7 @@ public class ShortStoryController {
             return "addShortStory";
         }
         shortStoryService.addNewShortStory(this.modelMapper.map(storyModel, ShortStoryCreateEditServiceModel.class));
-        return "redirect:/home";
+        return "redirect:/explore/stories";
     }
 
     @PreAuthorize("hasAuthority('MODERATOR')")

@@ -1,21 +1,31 @@
 export async function renderBook(id, item) {
+    let book;
+    try {
+         book = await (await fetch(`/api/explore/book/${id}`)).json();
+    } catch (e) {
+        return '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">This book does not exist</div></div>';
+    }
 
-    const book = await (await fetch(`/api/explore/book/${id}`)).json();
+
 
     let result = `<div class="container">
     <div class="mx-auto w-100 text-center text-white bg-text">
     
-    <p class="text-muted">Title: <span class="h4 text-white">${book.title}</span> </p> 
-    <p class="text-muted">Rating: <span class="h5 text-white">${book.rating} / 5</span> </p> 
+    <p class="text-info">Title: <span class="h4 text-white">${book.title}</span> </p> 
+    <p class="text-info">Rating: <span class="h5 text-white">${book.rating} / 5</span> </p> 
     <img src="${book.image}" class="img-thumbnail img-fluid max-width: 100% height: auto" id="bookImage" alt="Responsive image">
     <br>  <br>
-    <p class="text-muted">Author: <span class="h5 text-white">${book.author}</span> </p>              
-                  <p class="text-muted">Description: </p>
+    <p class="text-info">Author: <span class="h5 text-white">${book.author}</span> </p>              
+                  <p class="text-info">Description: </p>
                     <p class="border border-dark p-3">${book.description}</p>
                  
-                   <p class="text-muted">Release Date: <span class="p text-white">${book.releaseDate}</span> </p>
+                   <p class="text-info">Release Date: <span class="p text-white">${book.releaseDate}</span> </p>
                    <br>`;
-    result += renderRatingForm(id, item);
+    if (book.canVote) {
+        result += renderRatingForm(id, item);
+    } else {
+        result+= '<p class="text-white">You have already rated this book</p>';
+    }
     result += `<div sec:authorize=\"hasAuthority('MODERATOR')\" class=\"text-white\">`
         + renderButtons(id, item) +
         `</div>`;
@@ -30,23 +40,36 @@ export async function renderBook(id, item) {
 }
 
 export async function renderMovie(id, item) {
-    const movie = await (await fetch(`/api/explore/movie/${id}`)).json();
+    let movie;
+    try {
+        movie = await (await fetch(`/api/explore/movie/${id}`)).json();
+    } catch (e) {
+        return '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">This movie does not exist</div></div>';
+    }
+
 
     let result = `<div class="container">
     <div class="mx-auto w-100 text-center text-white bg-text">
     
-    <p class="text-muted">Title: <span class="h4 text-white">${movie.title}</span> </p> 
-    <p class="text-muted">Rating: <span class="h5 text-white">${movie.rating} / 5</span> </p> 
+    <p class="text-info">Title: <span class="h4 text-white">${movie.title}</span> </p> 
+    <p class="text-info">Rating: <span class="h5 text-white">${movie.rating} / 5</span> </p> 
    <iframe width="560" height="315" src="${movie.trailerLink}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     <br>  <br>
-    <p class="text-muted">Cast: <span class="h5 text-white">${movie.cast}</span> </p>              
-    <p class="text-muted">Director: <span class="h5 text-white">${movie.director}</span> </p>              
-                  <p class="text-muted">Description: </p>
+    <p class="text-info">Cast: <span class="h5 text-white">${movie.cast}</span> </p>              
+    <p class="text-info">Director: <span class="h5 text-white">${movie.director}</span> </p>              
+                  <p class="text-info">Description: </p>
                     <p class="border border-dark p-3">${movie.description}</p>
                  
-                   <p class="text-muted">Release Date: <span class="p text-white">${movie.releaseDate}</span> </p>
+                   <p class="text-info">Release Date: <span class="p text-white">${movie.releaseDate}</span> </p>
                    <br>`;
-    result += renderRatingForm(id, item);
+
+
+    if (movie.canVote) {
+        result += renderRatingForm(id, item);
+    } else {
+        result+= '<p class="text-white">You have already rated this movie</p>';
+    }
+
     result += `<div sec:authorize=\"hasAuthority('MODERATOR')\" class=\"text-white\">`
         + renderButtons(id, item) +
         `</div>`;
@@ -61,23 +84,35 @@ export async function renderMovie(id, item) {
 }
 
 export async function renderStory(id, item) {
-    const story = await (await fetch(`/api/explore/story/${id}`)).json();
+    let story;
+    try {
+        story = await (await fetch(`/api/explore/story/${id}`)).json();
+    } catch (e) {
+        return '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">This story does not exist</div></div>';
+    }
+
     let result = `<div class="container">
     <div class="mx-auto w-100 text-center text-white bg-text">
     
-    <p class="text-muted">Title: <span class="h4 text-white">${story.title}</span> </p> 
-    <p class="text-muted">Rating: <span class="h5 text-white">${story.rating} / 5</span> </p> 
-   <p class="text-muted">Short Summary: </p>
+    <p class="text-info">Title: <span class="h4 text-white">${story.title}</span> </p> 
+    <p class="text-info">Rating: <span class="h5 text-white">${story.rating} / 5</span> </p> 
+   <p class="text-info">Short Summary: </p>
                     <p class="border border-dark p-3">${story.summary}</p>
     <br>          
-    <p class="text-muted">Author: <span class="h5 text-white">${story.user}</span> </p>      
-       <p class="text-muted">Release Date: <span class="p text-white">${story.addedOn}</span> </p>  <br>      
-                  <p class="text-muted">Enjoy your read...: </p>
+    <p class="text-info">Author: <span class="h5 text-white">${story.user}</span> </p>      
+       <p class="text-info">Release Date: <span class="p text-white">${story.addedOn}</span> </p>  <br>      
+                  <p class="text-info">Enjoy your read...: </p>
                     <p class="border border-dark p-3">${story.content}</p>
                  
                 
                    <br>`;
-    result += renderRatingForm(id, item);
+
+
+    if (story.canVote) {
+        result += renderRatingForm(id, item);
+    } else {
+        result+= '<p class="text-white">You have already rated this story</p>';
+    }
     result += `<div sec:authorize=\"hasAuthority('MODERATOR')\" class=\"text-white\">`
         + renderButtons(id, item) +
         `</div>`;
@@ -93,15 +128,21 @@ export async function renderStory(id, item) {
 
 export async function renderQuestion(id, item) {
 
-    const question = await (await fetch(`/api/explore/question/${id}`)).json();
+    let question;
+    try {
+        question = await (await fetch(`/api/explore/question/${id}`)).json();
+    } catch (e) {
+        return '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">This question does not exist</div></div>';
+    }
+
     let result = `<div class="container">
     <div class="mx-auto w-100 text-center text-white bg-text">
     
-    <p class="text-muted">Title: <span class="h4 text-white">${question.title}</span> </p> 
+    <p class="text-info">Title: <span class="h4 text-white">${question.title}</span> </p> 
        
-    <p class="text-muted">By: <span class="h5 text-white">${question.user}</span> </p>      
-       <p class="text-muted">Release Date: <span class="p text-white">${question.publishDate}</span> </p>  <br>      
-                  <p class="text-muted">Question:</p>
+    <p class="text-info">By: <span class="h5 text-white">${question.user}</span> </p>      
+       <p class="text-info">Release Date: <span class="p text-white">${question.publishDate}</span> </p>  <br>      
+                  <p class="text-info">Question:</p>
                     <p class="border border-dark p-3">${question.content}</p>
                  
                 
@@ -135,7 +176,12 @@ export function RenderEditComment(commentId, prevText, item, id) {
 }
 
 export async function RenderEditBook(id) {
-    const book = await (await fetch(`/api/explore/book/${id}`)).json();
+    let book;
+    try {
+        book = await (await fetch(`/api/explore/book/${id}`)).json();
+    } catch (e) {
+        return '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">This book does not exist</div></div>';
+    }
     return `
             <form class="mx-auto w-50" action="/edit/book/${id}" method="post" th:object="\${bookModel}" enctype="multipart/form-data">
         <div class="form-group">
@@ -179,7 +225,12 @@ export async function RenderEditBook(id) {
 }
 
 export async function RenderEditMovie(id) {
-    const movie = await (await fetch(`/api/explore/movie/${id}`)).json();
+    let movie;
+    try {
+        movie = await (await fetch(`/api/explore/movie/${id}`)).json();
+    } catch (e) {
+        return '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">This movie does not exist</div></div>';
+    }
     return `<form class="mx-auto w-50" action="/edit/movie/${id}" method="post" th:object="\${movieModel}">
         <div class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
@@ -226,7 +277,12 @@ export async function RenderEditMovie(id) {
 }
 
 export async function RenderEditStory(id) {
-    const story = await (await fetch(`/api/explore/story/${id}`)).json();
+    let story;
+    try {
+        story = await (await fetch(`/api/explore/story/${id}`)).json();
+    } catch (e) {
+        return '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">This story does not exist</div></div>';
+    }
 
     return `
      <form class="mx-auto w-50" action="/edit/story/${id}" method="post" th:object="\${storyModel}">
@@ -257,7 +313,12 @@ export async function RenderEditStory(id) {
 }
 
 export async function RenderEditQuestion(id) {
-    const question = await (await fetch(`/api/explore/question/${id}`)).json();
+    let question;
+    try {
+        question = await (await fetch(`/api/explore/question/${id}`)).json();
+    } catch (e) {
+        return '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">This question does not exist</div></div>';
+    }
 
     return `
      <form class="mx-auto w-50" action="/edit/question/${id}" method="post" th:object="\${questionModel}">
@@ -330,12 +391,12 @@ function renderCommentButtons(commentId, item, id) {
 }
 
 function renderComments(comments, item, id) {
-    let result = `<br><p class="text-muted">Comments: </p>`;
+    let result = `<br><p class="text-info">Comments: </p>`;
     comments.forEach(c => {
         result += `
             <div class="border border-dark>
-            <p class="text-muted">Comment By: <span class="h5 text-light">${c.user}</span> </p> 
-            <p class="text-muted">On: <span class="p text-light">${c.publishDate}</span> </p>
+            <p class="text-info">Comment By: <span class="h5 text-light">${c.user}</span> </p> 
+            <p class="text-info">On: <span class="p text-light">${c.publishDate}</span> </p>
             <div>
             <p class="text-white">${c.content}</p></div>`
             + `<div sec:authorize=\"hasAuthority('MODERATOR')\" class=\"text-white\">`

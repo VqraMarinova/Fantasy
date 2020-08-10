@@ -21,5 +21,6 @@ public class ShortStoryViewModel {
     private String user;
     private List<CommentViewModel> comments;
     private String rating;
+    private Boolean canVote;
 
 }
