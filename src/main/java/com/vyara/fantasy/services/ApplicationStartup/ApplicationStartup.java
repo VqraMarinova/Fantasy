@@ -1,7 +1,6 @@
 package com.vyara.fantasy.services.ApplicationStartup;
 
 import com.vyara.fantasy.data.models.service.QuoteCreateEditServiceModel;
-import com.vyara.fantasy.data.models.service.UserRegisterServiceModel;
 import com.vyara.fantasy.services.QuoteService;
 import com.vyara.fantasy.services.UserService;
 import lombok.AllArgsConstructor;
@@ -46,11 +45,13 @@ public class ApplicationStartup
       }
 
       // for easier testing
-
+/*
       if (this.userService.getUsersCount() == 0){
           UserRegisterServiceModel user = new UserRegisterServiceModel("test", "test@test.com", "test", "test");
           this.userService.register(user);
       }
+
+ */
 
 
 
