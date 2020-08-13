@@ -169,6 +169,7 @@ export function RenderEditComment(commentId, prevText, item, id) {
             <textarea type="text" class="form-control" rows="3" id="content" name="content"
               th:field="*{content}" maxlength = "600"  minlength = "10" required>${prevText}</textarea>
         </div>
+    
 <button type="submit" class="btn btn-outline-danger btn-sm">Done</button>
 <button type="button" class="btn btn-outline-danger btn-sm" id="cancel">Cancel</button>
 </form>`;
@@ -217,6 +218,7 @@ export async function RenderEditBook(id) {
             <input type="date"  th:field="*{releaseDate}" class="form-control" id="releaseDate" value="${book.releaseDate}" th:field="*{releaseDate}" required name="releaseDate" required/>
         </div>
         <div class="button-holder d-flex justify-content-center">
+   
             <button class="btn btn-outline-danger btn-sm" type="submit">Done</button>
             <button type="button" class="btn btn-outline-danger btn-sm" id="cancel">Cancel</button>
         </div>
@@ -269,6 +271,7 @@ export async function RenderEditMovie(id) {
             <input type="date" class="form-control" id="releaseDate" name="releaseDate" value="${movie.releaseDate}" th:field="*{releaseDate}" required/>
         </div>
         <div class="button-holder d-flex justify-content-center">
+       
             <button class="btn btn-outline-danger btn-sm" type="submit">Done</button>
             <button type="button" class="btn btn-outline-danger btn-sm" id="cancel">Cancel</button>
         </div>
@@ -305,6 +308,7 @@ export async function RenderEditStory(id) {
             <textarea type="text" class="form-control" rows="15"  id="content" name="content" th:field="*{content}"  maxlength = "7000"  minlength = "400" required>${story.content}</textarea>
         </div>
         <div class="button-holder d-flex justify-content-center">
+    
             <button class="btn btn-outline-danger btn-sm" type="submit">Done</button>
             <button type="button" class="btn btn-outline-danger btn-sm" id="cancel">Cancel</button>
         </div>
@@ -336,6 +340,7 @@ export async function RenderEditQuestion(id) {
             <textarea type="text" class="form-control" rows="3" id="content" name="content" th:field="*{content}" maxlength = "800"  minlength = "30" required>${question.content}</textarea>
         </div>
         <div class="button-holder d-flex justify-content-center">
+     
              <button class="btn btn-outline-danger btn-sm" type="submit">Done</button>
             <button type="button" class="btn btn-outline-danger btn-sm" id="cancel">Cancel</button>
         </div>
@@ -376,6 +381,7 @@ function renderRatingForm(id, item) {
 function renderButtons(id, item) {
     return `<button type="button" class="btn btn-outline-danger btn-sm" id="editItem">Edit</button>
       <form action='/delete/${item}/${id}' method="post">
+    
        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
 </form>`
 
@@ -385,6 +391,7 @@ function renderButtons(id, item) {
 function renderCommentButtons(commentId, item, id) {
     return `<button type="button" class="btn btn-outline-danger btn-sm" id="editComment" value="${commentId}">Edit</button>
         <form action='/comment/delete/${item}/${id}/${commentId}' method="post">
+    
        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
 </form>`;
 
@@ -415,6 +422,7 @@ function addComment(item, id) {
             <textarea type="text" class="form-control" rows="3" id="content" name="content"
             th:field="*{content}" maxlength = "600"  minlength = "10" required></textarea>
         </div>
+      
 <button type="submit" class="btn btn-dark">Post</button>
 </form>`
     return result;

@@ -3,6 +3,7 @@ const items = (window.location.pathname.toString().split('/'))[2];
 
 window.addEventListener('load', async function () {
 
+
     const targetDiv = document.getElementById('exploreItems');
 
     targetDiv.innerHTML = '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">Loading...</div></div>';
@@ -100,6 +101,13 @@ window.addEventListener('load', async function () {
 
     async function renderQuotes() {
         const quotes = await (await fetch('/api/explore/quotes')).json();
+        $(function () {
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
+            $(document).ajaxSend(function(e, xhr, options) {
+                xhr.setRequestHeader(header, token);
+            });
+        });
         let result = `  <br><div class="page-text">`;
 
         quotes.forEach(quote => {
@@ -161,8 +169,8 @@ window.addEventListener('load', async function () {
     async function renderEditQuote(e) {
         const currentDiv = e.target.parentElement.parentElement;
         const quoteId = e.target.value;
-        const defAuthor = currentDiv.children[1].innerText;
-        const defQuote = (currentDiv.children[0].textContent).slice(1, -1);
+        const defAuthor = currentDiv.children[2].innerText;
+        const defQuote = (currentDiv.children[1].textContent).slice(1, -1);
 
         currentDiv.innerHTML = `
           <form class="text-right text-white w-50" method="post" action="/edit/quote/${quoteId}" th:object="\${quoteModel}">

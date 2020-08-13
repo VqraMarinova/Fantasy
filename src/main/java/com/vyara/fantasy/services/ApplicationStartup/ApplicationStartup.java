@@ -45,13 +45,15 @@ public class ApplicationStartup
       }
 
       // for easier testing
-        /*
+/*
       if (this.userService.getUsersCount() == 0){
           UserRegisterServiceModel user = new UserRegisterServiceModel("test", "test@test.com", "test", "test");
           this.userService.register(user);
       }
 
-         */
+ */
+
+
 
     }
 }

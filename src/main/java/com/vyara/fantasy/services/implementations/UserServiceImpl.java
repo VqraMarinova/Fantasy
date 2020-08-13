@@ -10,14 +10,17 @@ import com.vyara.fantasy.services.AuthenticatedUserService;
 import com.vyara.fantasy.services.HashingService;
 import com.vyara.fantasy.services.RoleService;
 import com.vyara.fantasy.services.UserService;
+import com.vyara.fantasy.services.bruteForcePrevention.LoginAttemptService;
 import com.vyara.fantasy.services.validation.EntityValidator;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.naming.directory.InvalidAttributesException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 
 @Service
@@ -30,6 +33,11 @@ public class UserServiceImpl implements UserService {
     private final AuthenticatedUserService authenticatedUserService;
     private final EntityValidator entityValidator;
 
+    @Autowired
+    private LoginAttemptService loginAttemptService;
+
+    @Autowired
+    private HttpServletRequest request;
 
 
     @Override
@@ -51,7 +59,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        String ip = getClientIP();
+        if (loginAttemptService.isBlocked(ip)) {
+            throw new RuntimeException("blocked");
+        }
         return this.userRepository.getByUsername(s);
+    }
+    private String getClientIP() {
+        String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null){
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
     }
 
 

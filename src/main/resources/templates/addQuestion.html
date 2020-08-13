@@ -33,6 +33,7 @@
                 <li th:each="error :  ${#fields.errors('content')}" th:text="${error}" class="text-danger"></li>
             </ul>
         </div>
+        <input type='hidden' th:name='${_csrf.parameterName}' th:value='${_csrf.token}' />
         <div class="button-holder d-flex justify-content-center">
             <button class="btn btn-info text-white mb-3" type="submit">Post</button>
         </div>
