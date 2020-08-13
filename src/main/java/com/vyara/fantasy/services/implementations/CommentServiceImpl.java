@@ -47,15 +47,25 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void addCommentToStory(CommentCreateEditModel model, Long id) {
         Comment comment = prepareCommentForDB(model);
-        comment.setStory(this.shortStoryRepository.getOne(id));
+        ShortStory story = this.shortStoryRepository.getOne(id);
+        comment.setStory(story);
         this.commentRepository.save(comment);
+        if (!comment.getUser().getUsername().equals(story.getUser().getUsername())) {
+            story.setNewAnswers(true);
+            this.shortStoryRepository.save(story);
+        }
     }
 
     @Override
     public void addCommentToQuestion(CommentCreateEditModel model, Long id) {
         Comment comment = prepareCommentForDB(model);
-        comment.setQuestion(this.questionRepository.getOne(id));
+        Question question = this.questionRepository.getOne(id);
+        comment.setQuestion(question);
         this.commentRepository.save(comment);
+        if (!comment.getUser().getUsername().equals(question.getUser().getUsername())) {
+            question.setNewAnswers(true);
+            this.questionRepository.save(question);
+        }
     }
 
     @Override

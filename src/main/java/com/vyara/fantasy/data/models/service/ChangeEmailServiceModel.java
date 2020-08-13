@@ -9,7 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ChangeEmailServiceModel {
 
-    private String password;
     private String newEmail;
     private String confirmEmail;
 }

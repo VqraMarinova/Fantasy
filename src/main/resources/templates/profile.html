@@ -26,19 +26,10 @@
                 <form class="mx-auto w-25" action="/changePassword" method="post" th:object="${passwordModel}">
                         <div class="form-group">
                             <div class="label-holder text-white d-flex justify-content-center">
-                                <label for="currentPassword" class="h3 mb-2" th:classappend ="${fontColor}">Current Password</label>
-                            </div>
-                            <input type="password" class="form-control" id="currentPassword" name="currentPassword" th:field= "*{currentPassword}"/>
-                        </div>
-                        <div class="form-group">
-                            <div class="label-holder text-white d-flex justify-content-center">
                                 <label for="password" class="h3 mb-2" th:classappend ="${fontColor}">New password</label>
                             </div>
                             <input type="password" class="form-control" id="password" name="newPassword" th:field= "*{newPassword}"
-                                   pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,25})" title="Should be between 5 and 25 characters and contain at least: one lower and one uppercase letter and one digit."/>
-                            <ul th:if="${#fields.hasErrors('newPassword')}">
-                                <li th:each="error :  ${#fields.errors('newPassword')}" th:text="${error}" class="text-warning"></li>
-                            </ul>
+                                   minlength="8" maxlength="60" title="Password Should have min 8 characters,it should contain at least: one lower and one uppercase letter one digit and one special character."/>
 
                         </div>
                         <div class="form-group">
@@ -46,7 +37,7 @@
                                 <label for="confirmPassword" class="h4 mb-2" th:classappend ="${fontColor}">Confirm Password</label>
                             </div>
                             <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" th:field= "*{confirmPassword}"
-                                   pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,25})" title="Should be between 5 and 25 characters and contain at least: one lower and one uppercase letter and one digit. Should match password field"/>
+                                   minlength="8" maxlength="60" title="Password Should have min 8 characters,it should contain at least: one lower and one uppercase letter one digit and one special character. Should match password field"/>
                             <span id='messageConfirmPas'></span>
                         </div>
                         <div class="button-holder d-flex justify-content-center">
@@ -61,18 +52,9 @@
                 <form class="mx-auto w-25" action="/changeEmail" method="post" th:object="${emailModel}">
                         <div class="form-group">
                             <div class="label-holder text-white d-flex justify-content-center">
-                                <label for="password" class="h3 mb-2" th:classappend ="${fontColor}">Your Password</label>
-                            </div>
-                            <input type="password" class="form-control"  name="password" th:field= "*{password}"/>
-                        </div>
-                        <div class="form-group">
-                            <div class="label-holder text-white d-flex justify-content-center">
                                 <label for="newEmail" class="h3 mb-2" th:classappend ="${fontColor}">New Email</label>
                             </div>
                             <input type="email" class="form-control" id="newEmail" name="newEmail" th:field= "*{newEmail}"/>
-                            <ul th:if="${#fields.hasErrors('newEmail')}">
-                                <li th:each="error :  ${#fields.errors('newEmail')}" th:text="${error}" class="text-warning"></li>
-                            </ul>
                         </div>
                         <div class="form-group">
                             <div class="label-holder text-white textCol d-flex justify-content-center">
@@ -95,17 +77,15 @@
     <script>
         document.getElementById('confirmEmail').addEventListener('change', ()=>{
                 const email = document.getElementById('newEmail');
-                const sub = document.getElementById('submit2');
+
                 const msgEmail = document.getElementById('messageConfirmEmail');
                 if (email.value ===
                     document.getElementById('confirmEmail').value) {
                     msgEmail.style.color = 'green';
                     msgEmail.innerHTML = 'matching';
-                    sub.disabled = false;
                 } else {
                     msgEmail.style.color = 'red';
                     msgEmail.innerHTML = 'not matching';
-                    sub.disabled = true;
                 }
             });
 

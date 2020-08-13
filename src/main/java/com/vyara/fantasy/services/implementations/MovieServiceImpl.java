@@ -78,6 +78,9 @@ public class MovieServiceImpl implements MovieService {
            }
 
         });
+       if (model.getTrailerLink().trim().length()==0){
+           model.setTrailerLink(Constants.MOVIE_DEFAULT_VIDEO_URL);
+       }
 
 
 
@@ -112,9 +115,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     private void setProperInputVideoLinkFormat(MovieCreateEditServiceModel movieModel) {
-        if (movieModel.getTrailerLink().trim().isEmpty()){
-            movieModel.setTrailerLink(Constants.MOVIE_DEFAULT_VIDEO_URL);
-        } else {
+        if (!movieModel.getTrailerLink().trim().isEmpty()){
             movieModel.setTrailerLink(movieModel.getTrailerLink().replace("watch?v=", "embed/"));
         }
     }

@@ -57,6 +57,10 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionViewModel getViewQuestion(Long id){
         Question question = this.questionRepository.getOne(id);
         QuestionViewModel model = this.modelMapper.map(question, QuestionViewModel.class);
+        if (this.authenticatedUserService.getUsername().equals(question.getUser().getUsername())){
+            question.setNewAnswers(false);
+            this.questionRepository.save(question);
+        }
         model.setPublishDate(question.getPublishDate().toString());
         model.setUser(question.getUser().getUsername());
         model.setAnswers(this.commentService.getCommentByQuestion(question));

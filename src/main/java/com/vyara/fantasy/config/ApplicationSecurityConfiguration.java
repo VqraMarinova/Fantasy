@@ -29,6 +29,8 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+
         http
                 .csrf()
                 .disable()
@@ -58,13 +60,17 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .and()
                 .rememberMe()
                 .rememberMeParameter("remember")
-                .key("remember Me Encryption Key")
+                .key("secretEncryptionKey")
                 .rememberMeCookieName("rememberMeCookie")
                 .tokenValiditySeconds(10000)
                 .and()
                 .logout()
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
+                .logoutSuccessUrl("/?logout=true")
                 .permitAll();
     }
+
 
 
     @Bean

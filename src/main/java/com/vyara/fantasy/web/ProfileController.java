@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.naming.directory.InvalidAttributesException;
 import javax.validation.Valid;
 
 @Controller
@@ -39,7 +40,7 @@ public class ProfileController {
     @PostMapping("/changePassword")
     public String changePassword(@Valid @ModelAttribute("passwordModel") ChangePasswordModel passwordModel, AbstractBindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
-           throw new Exception();
+           throw new InvalidAttributesException("Input data does not meet the requirements!");
         }
         this.userService.changePassword(this.modelMapper.map(passwordModel, ChangePasswordServiceModel.class));
         return "profile";
@@ -49,7 +50,7 @@ public class ProfileController {
     @PostMapping("/changeEmail")
     public String changeEmail(@Valid @ModelAttribute("emailModel") ChangeEmailModel emailModel, AbstractBindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
-            throw new Exception();
+            throw new InvalidAttributesException("Input data does not meet the requirements!");
         }
         this.userService.changeEmail(this.modelMapper.map(emailModel, ChangeEmailServiceModel.class));
         return "profile";

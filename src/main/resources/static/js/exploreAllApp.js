@@ -122,6 +122,9 @@ window.addEventListener('load', async function () {
 
     async function renderBooks() {
         const books = await (await fetch('/api/explore/books')).json();
+        if (books.length === 0){
+            return '<div class="container"> <div class=\"mx-auto w-100 text-center text-white bg-text\">There are no books to show</div></div>';
+        }
 
         let result = `<div class='row mb-4 d-flex justify-content-around'>`;
 

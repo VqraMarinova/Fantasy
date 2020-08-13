@@ -4,75 +4,104 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-        >
+>
 <th:block th:include="~{fragments/head}"/>
 
 <body th:background="${backgroundImage}">
 <th:block th:include="~{fragments/header}"/>
 <main>
     <div class="container text-center text-white">
-        <p class="h3 text-white" th:classappend ="${fontColor}" th:text="${session.greeting}+ ${session.username}"></p><br>
+        <p class="h3 text-white" th:classappend="${fontColor}" th:text="${session.greeting}+ ${session.username}"></p>
+        <br>
         <div class="text-white text-center">
-            <p class="h4 text-white" th:classappend ="${fontColor}">We are all about fantasy &#x2764;</p>
-            <p class="h4 text-white" th:classappend ="${fontColor}">Please, read, share and discuss!</p>
-        </div><br><br>
+            <p class="h4 text-white" th:classappend="${fontColor}">We are all about fantasy &#x2764;</p>
+            <p class="h4 text-white" th:classappend="${fontColor}">Please, read, share and discuss!</p>
+        </div>
+        <br><br>
 
         <th:block th:if="${questionsForUserCount == 0}">
             <div class="text-white text-center">
-                <p class="h4 text-white" th:classappend ="${fontColor}">You have not published any questions yet! Don't be shy and start a discussion <a href="/add-question">HERE</a> </p>
-            </div><br>
+                <p class="h4 text-white" th:classappend="${fontColor}">You have not published any questions yet! Don't
+                    be shy and start a discussion <a href="/add-question">HERE</a></p>
+            </div>
+            <br>
         </th:block>
         <th:block th:unless="${questionsForUserCount == 0}">
-            <br> <div class="text-white text-center">
-                <p class="h6 text-white" th:classappend ="${fontColor}">Your Questions:</p>
+            <br>
+            <div class="text-white text-center">
+                <p class="h6 text-white" th:classappend="${fontColor}">Your Questions:</p>
 
-                <table class="table table-bordered bg-text justify-content-around" id="table" >
+                <table class="table table-bordered bg-text justify-content-around" id="table">
                     <thead>
                     <tr>
                         <th scope="col">Title:</th>
                         <th scope="col">Published On</th>
                         <th scope="col">Answered</th>
+                        <th scope="col">New answers</th>
+
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="question : ${questionsForUser}">
-                        <td><a th:href="@{'/explore/question/' + ${question.getId()}}" th:text="${question.getTitle()}"></a></td>
+                        <td><a th:href="@{'/explore/question/' + ${question.getId()}}"
+                               th:text="${question.getTitle()}"></a></td>
                         <td th:text="${question.getPublishDate()}"></td>
                         <td th:text="${question.getAnswersCount()}"></td>
+                        <th:block th:if="${question.getNewAnswers() == true}">
+                       <td class="text-danger">Yes!</td>
+                            </th:block>
+                        <th:block th:if="${question.getNewAnswers() == false}">
+                            <td>No</td>
+                        </th:block>
 
-                    </tr>
+        </tr>
 
-                    </tbody>
-                    </table>
-            </div><br>
-        </th:block>
-        <th:block th:if="${storiesForUserCount == 0}">
-            <div class="text-white text-center">
-                <p class="h4 text-white" th:classappend ="${fontColor}">You have not published any stories yet! Show the world what a great author you are <a href="/add-story">HERE</a> </p>
-            </div><br>
-        </th:block>
-        <th:block th:unless="${storiesForUserCount == 0}">
-            <br><div class="text-white text-center">
-                <p class="h6 text-white" th:classappend ="${fontColor}">Your Stories</p>
-            <table class="table table-bordered bg-text justify-content-around" id="table" >
+        </tbody>
+        </table>
+    </div>
+    <br>
+    </th:block>
+    <th:block th:if="${storiesForUserCount == 0}">
+        <div class="text-white text-center">
+            <p class="h4 text-white" th:classappend="${fontColor}">You have not published any stories yet! Show the
+                world what a great author you are <a href="/add-story">HERE</a></p>
+        </div>
+        <br>
+    </th:block>
+    <th:block th:unless="${storiesForUserCount == 0}">
+        <br>
+        <div class="text-white text-center">
+            <p class="h6 text-white" th:classappend="${fontColor}">Your Stories</p>
+            <table class="table table-bordered bg-text justify-content-around" id="table">
                 <thead>
                 <tr>
                     <th scope="col">Title:</th>
                     <th scope="col">Rating</th>
+                    <th scope="col">New comments</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="story : ${storiesForUser}">
                     <td><a th:href="@{'/explore/story/' + ${story.getId()}}" th:text="${story.getTitle()}"></a></td>
                     <td th:text="${story.getRating()}"></td>
+                    <th:block th:if="${story.getNewAnswers() == true}">
+                        <td class="text-danger">Yes!</td>
+                    </th:block>
+                    <th:block th:if="${story.getNewAnswers() == false}">
+                        <td>No</td>
+                    </th:block>
+
+
+
                 </tr>
 
                 </tbody>
             </table>
 
 
-            </div><br>
-        </th:block>
+        </div>
+        <br>
+    </th:block>
 
     </div>
 </main>

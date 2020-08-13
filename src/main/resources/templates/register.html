@@ -18,7 +18,7 @@
                 <label for="username" class="h4 mb-2 text-white" th:classappend ="${fontColor}">Username</label>
             </div>
             <input type="text" class="form-control" th:field= "*{username}" id="username" name="username"
-                   pattern="^[a-zA-Z0-9._-]{3,15}$" title="Username should have between 3 and 15 characters. Valid characters: a-z, A-Z, 0-9, points, dashes and underscores"/>
+                  minlength="5" maxlength="20" title="Username should have between 5 and 20 characters. Valid characters: a-z, A-Z, 0-9, points, dashes and underscores"/>
             <ul th:if="${#fields.hasErrors('username')}">
                 <li th:each="error :  ${#fields.errors('username')}" th:text="${error}" class="text-danger"></li>
             </ul>
@@ -39,7 +39,7 @@
                 <label for="password" class="h4 mb-2" th:classappend ="${fontColor}">Password</label>
             </div>
             <input type="password" class="form-control" id="password" th:field= "*{password}" name="password"
-                   pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,25})" title="Should be between 5 and 25 characters and contain at least: one lower and one uppercase letter and one digit."/>
+                   minlength="8" maxlength="60" title="Password Should have min 8 characters,it should contain at least: one lower and one uppercase letter one digit and one special character."/>
             <ul th:if="${#fields.hasErrors('password')}">
                 <li th:each="error :  ${#fields.errors('password')}" th:text="${error}" class="text-danger"></li>
             </ul>
@@ -49,7 +49,7 @@
                 <label for="confirmPassword" class="h4 mb-2" th:classappend ="${fontColor}">Confirm Password</label>
             </div>
             <input class="form-control" type="password" id="confirmPassword" th:field= "*{confirmPassword}" name="confirmPassword"
-                   pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,25})" title="Should be between 5 and 25 characters and contain at least: one lower and one uppercase letter and one digit. Should match password field"/>/>
+                   minlength="8" maxlength="60" title="Password Should have min 8 characters,it should contain at least: one lower and one uppercase letter one digit and one special character. Should match password field"/>/>
             <span id='messageConfirmPas'></span>
         </div>
         <div class="button-holder d-flex justify-content-center">
@@ -61,7 +61,6 @@
     </div>
     </div>
     <script src="/js/validateConfirmPassword.js"></script>
-    <script src="/js/validateUserAndEmail.js"></script>
 </main>
 
 <th:block th:include="~{fragments/footer}"/>

@@ -9,7 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ChangePasswordServiceModel {
 
-    private String currentPassword;
     private String newPassword;
     private String confirmPassword;
 }

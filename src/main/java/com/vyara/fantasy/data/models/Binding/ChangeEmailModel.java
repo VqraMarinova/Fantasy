@@ -11,8 +11,6 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 public class ChangeEmailModel {
 
-    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{5,25})")
-    private String password;
 
     @Pattern(regexp = "^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$", message = "Please enter valid email")
     private String newEmail;

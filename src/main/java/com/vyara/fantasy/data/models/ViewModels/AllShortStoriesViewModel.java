@@ -14,5 +14,6 @@ public class AllShortStoriesViewModel {
     private String title;
     private String user;
     private String rating;
+    private Boolean newAnswers;
 
 }

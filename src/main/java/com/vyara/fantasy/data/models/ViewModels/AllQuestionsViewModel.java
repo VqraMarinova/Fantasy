@@ -15,4 +15,5 @@ public class AllQuestionsViewModel {
     private String publishDate;
     private String user;
     private int answersCount;
+    private Boolean newAnswers;
 }

@@ -40,4 +40,7 @@ public class ShortStory extends BaseEntity {
     @OneToMany(mappedBy = "story", cascade = CascadeType.REMOVE)
     private List<Rating> rating;
 
+    @Column
+    private Boolean newAnswers = false;
+
 }

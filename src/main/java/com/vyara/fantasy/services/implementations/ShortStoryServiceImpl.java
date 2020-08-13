@@ -65,6 +65,11 @@ public class ShortStoryServiceImpl implements ShortStoryService {
         ShortStory story = this.shortStoryRepository.getOne(id);
         ShortStoryViewModel model = this.modelMapper.map(story, ShortStoryViewModel.class);
 
+        if (this.authenticatedUserService.getUsername().equals(story.getUser().getUsername())){
+            story.setNewAnswers(false);
+            this.shortStoryRepository.save(story);
+        }
+
         model.setRating(this.ratingService.getRatingByStory(story));
         model.setComments(this.commentService.getCommentByStory(story));
         model.setAddedOn(story.getAddedOn().toString());

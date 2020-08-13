@@ -33,4 +33,8 @@ public class Question extends BaseEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Comment> answers;
 
+
+    @Column
+    private Boolean newAnswers = false;
+
 }

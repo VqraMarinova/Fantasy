@@ -8,6 +8,8 @@ import com.vyara.fantasy.data.models.service.UserRegisterServiceModel;
 public interface EntityValidator {
     boolean isUserValid(UserRegisterServiceModel user);
 
+    boolean isEmailValid(String newEmail, String confirmEmail);
+
     boolean isBookValid(BookCreateEditServiceModel model);
 
     boolean isMovieValid(MovieCreateEditServiceModel model);

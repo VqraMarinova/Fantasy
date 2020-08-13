@@ -6,4 +6,6 @@ import java.io.IOException;
 
 public interface CloudService {
     String uploadImage(MultipartFile multipartFile) throws IOException;
+
+    void deleteImageByUrl(String url);
 }

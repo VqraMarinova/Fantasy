@@ -1,6 +1,5 @@
 package com.vyara.fantasy.web;
 
-import com.vyara.fantasy.constants.Constants;
 import com.vyara.fantasy.data.models.Binding.BookCreateEditModel;
 import com.vyara.fantasy.data.models.service.BookCreateEditServiceModel;
 import com.vyara.fantasy.services.BookService;
@@ -42,9 +41,8 @@ public class BookController {
             return "addBook";
         }
         BookCreateEditServiceModel book = this.modelMapper.map(bookModel, BookCreateEditServiceModel.class);
-        if (bookModel.getImage().isEmpty()) {
-            book.setImage(Constants.BOOK_DEFAULT_IMAGE);
-        } else {
+
+        if (!bookModel.getImage().isEmpty()) {
             book.setImage(cloudService.uploadImage(bookModel.getImage()));
         }
 

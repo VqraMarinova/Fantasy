@@ -1,5 +1,6 @@
 package com.vyara.fantasy.services.implementations;
 
+import com.vyara.fantasy.constants.Constants;
 import com.vyara.fantasy.data.entities.Book;
 import com.vyara.fantasy.data.entities.secondary.Rating;
 import com.vyara.fantasy.data.models.ViewModels.AllBooksViewModel;
@@ -8,6 +9,7 @@ import com.vyara.fantasy.data.models.service.BookCreateEditServiceModel;
 import com.vyara.fantasy.errors.EntityAlreadyExistsException;
 import com.vyara.fantasy.repositories.BookRepository;
 import com.vyara.fantasy.services.BookService;
+import com.vyara.fantasy.services.CloudService;
 import com.vyara.fantasy.services.CommentService;
 import com.vyara.fantasy.services.RatingService;
 import com.vyara.fantasy.services.validation.EntityValidator;
@@ -28,6 +30,7 @@ public class BookServiceImpl implements BookService {
     private final RatingService ratingService;
     private final CommentService commentService;
     private final EntityValidator entityValidator;
+    private final CloudService cloudService;
 
 
 
@@ -67,6 +70,9 @@ public class BookServiceImpl implements BookService {
         model.setRating(this.ratingService.getRatingByBook(book));
         model.setComments(this.commentService.getCommentByBook(book));
         model.setReleaseDate(book.getReleaseDate().toString());
+        if (model.getImage().contains("org.springframework.web.multipart.support.StandardMultipartHttpServletRequest")){
+            model.setImage(Constants.BOOK_DEFAULT_IMAGE.toString());
+        }
 
         List<Rating> ratings = this.ratingService.getRatingsForCurrentUser();
         model.setCanVote(true);
@@ -87,13 +93,19 @@ public class BookServiceImpl implements BookService {
        prepareBookForDb(book, model);
        book.setTitle(model.getTitle());
        book.setDescription(model.getDescription());
-       book.setImage(model.getImage());
+       if (model.getImage()!=null && book.getImage()!=null) {
+           this.cloudService.deleteImageByUrl(book.getImage());
+           book.setImage(model.getImage());
+       }
         this.bookRepository.save(book);
     }
 
     @Override
     public void deleteBook(Long id) {
-
+        Book book = this.bookRepository.getOne(id);
+        if (book.getImage()!=null) {
+            this.cloudService.deleteImageByUrl(book.getImage());
+        }
         this.bookRepository.deleteById(id);
 
     }

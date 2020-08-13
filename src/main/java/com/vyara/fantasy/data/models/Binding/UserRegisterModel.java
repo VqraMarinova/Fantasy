@@ -13,7 +13,7 @@ import javax.validation.constraints.Pattern;
 public class UserRegisterModel {
 
     @NotNull(message = "Field can not be empty")
-    @Pattern(regexp = "^[a-zA-Z0-9._-]{3,15}$", message = "Username should have between 3 and 15 characters. Valid characters: a-z, A-Z, 0-9, points, dashes and underscores")
+    @Pattern(regexp = "^[a-zA-Z0-9._-]{5,20}$", message = "Username should have between 5 and 20 characters. Valid characters: a-z, A-Z, 0-9, points, dashes and underscores")
     private String username;
 
     @NotNull(message = "Field can not be empty")
@@ -21,10 +21,10 @@ public class UserRegisterModel {
     private String email;
 
     @NotNull(message = "Field can not be empty")
-    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{5,25})", message = "Should be between 5 and 25 characters and contain at least: one lower and one uppercase letter and one digit.")
+    @Pattern(regexp = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,60})", message = "Password Should have min 8 characters,it should contain at least: one lower and one uppercase letter one digit and one special character.")
     private String password;
 
     @NotNull(message = "Field can not be empty")
-    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{5,25})")
+    @Pattern(regexp = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,60})")
     private String confirmPassword;
 }

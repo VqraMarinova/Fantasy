@@ -1,7 +1,6 @@
 package com.vyara.fantasy.services.ApplicationStartup;
 
 import com.vyara.fantasy.data.models.service.QuoteCreateEditServiceModel;
-import com.vyara.fantasy.data.models.service.UserRegisterServiceModel;
 import com.vyara.fantasy.services.QuoteService;
 import com.vyara.fantasy.services.UserService;
 import lombok.AllArgsConstructor;
@@ -30,6 +29,7 @@ public class ApplicationStartup
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
 
+        //for presentational purpose
 
       if (this.quoteService.getAllQuotes().size() == 0){
           QuoteCreateEditServiceModel q1 = new QuoteCreateEditServiceModel("Terry Pratchett","The trouble with having an open mind, of course, is that people will insist on coming along and trying to put things in it.");
@@ -44,10 +44,14 @@ public class ApplicationStartup
           this.quoteService.chooseUpQuoteOfTheHour();
       }
 
-      if (this.userService.getCheckUsers().size() == 0){
-          UserRegisterServiceModel user = new UserRegisterServiceModel("vvv", "vvv@.vvv.com", "vvv", "vvv");
+      // for easier testing
+        /*
+      if (this.userService.getUsersCount() == 0){
+          UserRegisterServiceModel user = new UserRegisterServiceModel("test", "test@test.com", "test", "test");
           this.userService.register(user);
       }
+
+         */
 
     }
 }

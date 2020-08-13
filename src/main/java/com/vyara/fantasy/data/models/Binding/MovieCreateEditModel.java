@@ -20,7 +20,7 @@ public class MovieCreateEditModel {
     private String title;
 
     @Nullable
-    @Pattern(regexp = "((?:https?:\\/\\/)?(?:www\\.)?youtu\\.?be(?:\\.com)?\\/?.*(?:watch|embed)?(?:.*v=|v\\/|\\/)([\\w\\-_]+)\\&?)*", message = "Only youtube videos are allowed")
+    @Pattern(regexp = "(http(?:s?)://(?:www\\.)?youtu(?:be\\.com/(?:watch\\?v=|embed/)|\\.be/)([\\w\\-_]*))*", message = "Only youtube videos are allowed")
     private String trailerLink;
 
     @NotNull(message = "Field can not be empty")

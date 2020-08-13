@@ -1,5 +1,6 @@
 package com.vyara.fantasy.services.validation;
 
+import com.vyara.fantasy.data.entities.User;
 import com.vyara.fantasy.data.models.service.BookCreateEditServiceModel;
 import com.vyara.fantasy.data.models.service.MovieCreateEditServiceModel;
 import com.vyara.fantasy.data.models.service.QuoteCreateEditServiceModel;
@@ -8,6 +9,7 @@ import com.vyara.fantasy.repositories.BookRepository;
 import com.vyara.fantasy.repositories.MovieRepository;
 import com.vyara.fantasy.repositories.QuoteRepository;
 import com.vyara.fantasy.repositories.UserRepository;
+import com.vyara.fantasy.services.HashingService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,13 @@ public class EntityValidatorImpl implements EntityValidator {
     public boolean isUserValid(UserRegisterServiceModel user) {
         return !userRepository.existsByUsername(user.getUsername()) &&
                 !userRepository.existsByEmail(user.getEmail());
+    }
+
+    @Override
+    public boolean isEmailValid(String newEmail, String confirmEmail) {
+        return !userRepository.existsByEmail(newEmail) &&
+                newEmail.equals(confirmEmail);
+
     }
 
 

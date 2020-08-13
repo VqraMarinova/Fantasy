@@ -1,7 +1,6 @@
 package com.vyara.fantasy.services.implementations;
 
 import com.vyara.fantasy.data.entities.User;
-import com.vyara.fantasy.data.models.ViewModels.CheckUserViewModel;
 import com.vyara.fantasy.data.models.service.ChangeEmailServiceModel;
 import com.vyara.fantasy.data.models.service.ChangePasswordServiceModel;
 import com.vyara.fantasy.data.models.service.UserRegisterServiceModel;
@@ -17,12 +16,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.naming.directory.InvalidAttributesException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -48,7 +44,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(hashingService.hashPass(model.getPassword()));
         setRoles(user);
         userRepository.save(user);
-        ServletRequestAttributes attributes;
 
         this.authenticatedUserService.loginAfterRegister(user);
     }
@@ -71,44 +66,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(ChangePasswordServiceModel changePasswordServiceModel) throws Exception {
+    public void changePassword(ChangePasswordServiceModel model) throws Exception {
         User user = this.authenticatedUserService.getCurrentUser();
-
-        if (!changePasswordServiceModel.getNewPassword().equals(changePasswordServiceModel.getConfirmPassword())
-                || hashingService.hashPass(changePasswordServiceModel.getCurrentPassword()).equals(user.getPassword())) {
-            throw new InvalidAttributesException("Password do not match");
-        }
-
-        user.setPassword(hashingService.hashPass(changePasswordServiceModel.getNewPassword()));
-        this.userRepository.save(user);
-
-
-    }
-
-    @Override
-    public void changeEmail(ChangeEmailServiceModel changeEmailServiceModel) throws Exception {
-        User user = this.authenticatedUserService.getCurrentUser();
-        if (!changeEmailServiceModel.getNewEmail().equals(changeEmailServiceModel.getConfirmEmail())
-                || hashingService.hashPass(changeEmailServiceModel.getPassword()).equals(user.getPassword())) {
+        if (!this.entityValidator.arePasswordsValid(model.getNewPassword()
+                , model.getConfirmPassword())){
             throw new InvalidAttributesException("Input data do not match");
         }
 
-        user.setEmail(changeEmailServiceModel.getNewEmail());
+
+        user.setPassword(hashingService.hashPass(model.getNewPassword()));
+        this.userRepository.save(user);
+
+
+    }
+
+
+    @Override
+    public void changeEmail(ChangeEmailServiceModel model) throws Exception {
+        User user = this.authenticatedUserService.getCurrentUser();
+       if (!this.entityValidator.isEmailValid(model.getNewEmail(), model.getConfirmEmail())){
+            throw new InvalidAttributesException("Input data do not match");
+        }
+
+        user.setEmail(model.getNewEmail());
         this.userRepository.save(user);
 
     }
 
     @Override
-    public List<CheckUserViewModel> getCheckUsers(){
-        List<CheckUserViewModel> models = new ArrayList<>();
-        this.userRepository.findAll().forEach(u->{
-            CheckUserViewModel model = new CheckUserViewModel();
-            model.setUsername(this.hashingService.hashContent(u.getUsername()));
-            model.setEmail(this.hashingService.hashContent(u.getEmail()));
-            models.add(model);
-
-        });
-        return models;
-    };
+    public long getUsersCount(){
+        return this.userRepository.findAll().size();
+    }
 
 }
